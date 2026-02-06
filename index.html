@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botanique Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,sans-serif;font-style:normal}
+body{background:#f8f9fa;color:#111827;min-height:100vh;display:flex;justify-content:center}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.wrap{width:100%;max-width:620px;padding:28px 20px;min-height:100vh}
+.header{text-align:center;margin-bottom:36px}
+.header h1{font-size:22px;font-weight:800;color:#111827;letter-spacing:-0.5px}
+.header .sub{font-size:13px;color:#9ca3af;margin-top:4px;font-weight:500}
+.back-btn{font-size:13px;color:#6b7280;background:none;border:none;cursor:pointer;margin-top:8px;font-weight:600}
+.back-btn:hover{color:#374151}
+
+/* Progress */
+.progress{width:100%;margin-bottom:28px}
+.progress-top{display:flex;justify-content:space-between;margin-bottom:10px;font-size:13px;font-weight:600;color:#6b7280}
+.progress-top .correct{color:#16a34a}
+.progress-top .wrong{color:#dc2626}
+.progress-bar{width:100%;height:8px;border-radius:99px;background:#e5e7eb;box-shadow:inset 0 1px 3px rgba(0,0,0,0.06)}
+.progress-fill{height:100%;border-radius:99px;background:#111827;transition:width 0.5s ease}
+
+/* Cards */
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);padding:22px 24px;margin-bottom:24px}
+.q-label{font-size:12px;font-weight:700;color:#9ca3af;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.q-text{font-size:16px;font-weight:700;color:#111827;line-height:1.7}
+
+/* Options */
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.option{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:14px;cursor:pointer;transition:all 0.2s ease;font-size:15px;line-height:1.65;font-weight:500;user-select:none;border:1px solid #e5e7eb;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.option:hover:not(.disabled){border-color:#d1d5db;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.option.selected{border:2px solid #374151;background:#f9fafb;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+.option.correct-answer{border:2px solid #16a34a;background:#f0fdf4;box-shadow:0 2px 10px rgba(22,163,74,0.10)}
+.option.wrong-answer{border:2px solid #dc2626;background:#fef2f2;box-shadow:0 2px 10px rgba(220,38,38,0.08)}
+.option.dimmed{opacity:0.45}
+.option.disabled{cursor:default}
+
+.badge{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;transition:all 0.2s ease;background:#f3f4f6;color:#6b7280}
+.option.selected .badge{background:#111827;color:#fff}
+.option.correct-answer .badge{background:#16a34a;color:#fff}
+.option.wrong-answer .badge{background:#dc2626;color:#fff}
+.option.dimmed .badge{background:#f3f4f6;color:#d1d5db}
+
+.option-text{color:#4b5563;font-weight:500}
+.option.selected .option-text{color:#111827}
+.option.correct-answer .option-text{color:#15803d;font-weight:700}
+.option.wrong-answer .option-text{color:#b91c1c;font-weight:700}
+.option.dimmed .option-text{color:#9ca3af}
+
+/* Explanation */
+.explanation{animation:fadeUp 0.3s ease both;margin-bottom:24px;padding:20px 22px;border-radius:16px}
+.explanation.is-correct{background:#f0fdf4;border:1px solid #bbf7d0;box-shadow:0 2px 12px rgba(22,163,74,0.06)}
+.explanation.is-wrong{background:#fef2f2;border:1px solid #fecaca;box-shadow:0 2px 12px rgba(220,38,38,0.06)}
+.explanation .icon-badge{width:28px;height:28px;border-radius:14px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+.explanation .icon-badge.green{background:#16a34a}
+.explanation .icon-badge.red{background:#dc2626}
+.explanation .status{font-size:14px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase}
+.explanation .status.green{color:#15803d}
+.explanation .status.red{color:#b91c1c}
+.explanation .body{font-size:14px;color:#4b5563;line-height:1.7;font-weight:500;margin-top:10px}
+.explanation .body strong{font-weight:800;color:#111827}
+
+/* Buttons */
+.btn{padding:16px;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;transition:all 0.2s ease;width:100%;border:none}
+.btn-primary{background:#111827;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.12)}
+.btn-primary:hover{background:#1f2937}
+.btn-primary:disabled{background:#e5e7eb;color:#9ca3af;box-shadow:none;cursor:default}
+.btn-secondary{background:#fff;color:#374151;border:2px solid #e5e7eb;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.btn-secondary:hover{background:#f9fafb;border-color:#d1d5db}
+.btn-row{display:flex;gap:10px}
+.btn-row .btn{flex:1;padding:15px;font-size:14px}
+
+.retry-info{margin-top:18px;font-size:13px;color:#9ca3af;text-align:center;font-weight:600}
+
+/* Home */
+.home-desc{text-align:center;color:#6b7280;font-size:15px;margin-bottom:36px;line-height:1.7;font-weight:500}
+.series-btn{width:100%;padding:24px 28px;border-radius:18px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;margin-bottom:14px;text-align:left;transition:all 0.2s ease;display:flex;align-items:center;gap:20px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.series-btn:hover{box-shadow:0 6px 24px rgba(0,0,0,0.08);transform:translateY(-2px)}
+.series-num{width:52px;height:52px;border-radius:14px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#374151;flex-shrink:0}
+.series-info{flex:1}
+.series-info .name{font-size:17px;font-weight:800;color:#111827;margin-bottom:4px}
+.series-info .desc{font-size:14px;color:#374151;font-weight:600;margin-bottom:2px}
+.series-info .meta{font-size:13px;color:#9ca3af;font-weight:500}
+.series-arrow{color:#9ca3af;font-size:20px;font-weight:600}
+
+.how-it-works{margin-top:36px;padding:24px;border-radius:18px;background:#fff;border:1px solid #f3f4f6;box-shadow:0 1px 6px rgba(0,0,0,0.03)}
+.how-it-works h3{font-size:14px;font-weight:800;color:#374151;margin-bottom:14px}
+.how-step{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#6b7280;font-weight:500;margin-bottom:10px;line-height:1.5}
+.how-step .num{color:#111827;font-weight:800;font-size:13px;min-width:20px}
+
+/* Results */
+.results{display:flex;flex-direction:column;align-items:center;animation:fadeUp 0.5s ease both;padding:32px 0}
+.grade-circle{width:120px;height:120px;border-radius:60px;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,0.10);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.grade-letter{font-size:56px;font-weight:800}
+.grade-label{font-size:14px;font-weight:600;color:#6b7280;letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;width:100%;max-width:420px;margin-bottom:36px}
+.stat-card{background:#fff;border-radius:16px;padding:22px 14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.06);border:1px solid #f3f4f6}
+.stat-value{font-size:28px;font-weight:800}
+.stat-label{font-size:11px;font-weight:600;color:#9ca3af;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
+.result-btns{display:flex;gap:12px;width:100%;max-width:420px}
+.result-btns .btn{flex:1;padding:15px 20px;font-size:14px}
+
+.hidden{display:none}
+.anim{animation:fadeUp 0.4s ease both}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Botanique Quiz</h1>
+    <div class="sub">Plantes Medicinales - QCM</div>
+    <button class="back-btn hidden" id="backBtn" onclick="goHome()">← Retour</button>
+  </div>
+
+  <!-- HOME -->
+  <div id="homeScreen" class="anim">
+    <p class="home-desc">Choisis ta série. Chaque série contient 60 QCM mélangés aléatoirement.</p>
+    <button class="series-btn" onclick="startSeries(1)">
+      <div class="series-num">1</div>
+      <div class="series-info">
+        <div class="name">Série 1</div>
+        <div class="desc">Cours + TP fusionnés</div>
+        <div class="meta">Familles, drogues, chimie, propriétés — 60 questions</div>
+      </div>
+      <div class="series-arrow">→</div>
+    </button>
+    <button class="series-btn" onclick="startSeries(2)">
+      <div class="series-num">2</div>
+      <div class="series-info">
+        <div class="name">Série 2</div>
+        <div class="desc">Cours approfondi + TP</div>
+        <div class="meta">Ergot, Cannabis, Digitale, Podophylle... — 60 questions</div>
+      </div>
+      <div class="series-arrow">→</div>
+    </button>
+    <div class="how-it-works">
+      <h3>Comment ca marche</h3>
+      <div class="how-step"><span class="num">1.</span><span>Sélectionne les bonnes réponses puis appuie sur Valider</span></div>
+      <div class="how-step"><span class="num">2.</span><span>Explication affichée après chaque réponse</span></div>
+      <div class="how-step"><span class="num">3.</span><span>Si tu te trompes : « Repasser plus tard » remet la question en fin de série</span></div>
+      <div class="how-step"><span class="num">4.</span><span>Score final avec rang S / A / B / C / D / F</span></div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizScreen" class="hidden"></div>
+
+  <!-- RESULTS -->
+  <div id="resultScreen" class="hidden"></div>
+</div>
+
+<script>
+const SERIES_1=[{q:"Concernant la nomenclature binaire de Linné :",o:{A:"Elle attribue trois noms à chaque espèce végétale.",B:"Le premier nom correspond à l'espèce et le second au genre.",C:"Elle permet d'éviter les confusions liées aux noms vernaculaires.",D:"Le nom du descripteur est souvent mentionné en abrégé à la fin.",E:"Elle classe les végétaux uniquement selon leur couleur."},a:["C","D"],ex:"Le binôme est Genre + Espèce (B faux). Elle remplace les noms vernaculaires confus (C vrai). Le descripteur est à la fin (D vrai)."},{q:"Dans la classification phylogénétique (APG) :",o:{A:"Elle est basée uniquement sur la morphologie florale.",B:"Elle utilise des caractères moléculaires (ADN, ARN).",C:"Elle classe les êtres vivants en 3 domaines : Archéobactéries, Eubactéries et Eucaryotes.",D:"Les Monocots possèdent des graines à 2 cotylédons.",E:"Les Eudicots ont un pollen triaperturé."},a:["B","C","E"],ex:"APG est moléculaire (A faux). Monocots = 1 cotylédon (D faux). Eudicots = pollen triaperturé (E vrai)."},{q:"Les caractéristiques des Monocots incluent :",o:{A:"Une racine pivotante.",B:"Des fleurs généralement trimères (pièces par 3).",C:"Des feuilles à nervation parallèle.",D:"Un pollen triaperturé.",E:"Une tige rarement ramifiée."},a:["B","C","E"],ex:"Racines fasciculées (A faux), pollen monoaperturé (D faux)."},{q:"Les caractéristiques des Eudicots incluent :",o:{A:"Des fleurs pentamères (pièces par 5).",B:"Des feuilles à nervation pennée.",C:"Des faisceaux libéro-ligneux disposés en cercle (annulaires).",D:"Un système racinaire fasciculé.",E:"Des graines à un seul cotylédon."},a:["A","B","C"],ex:"Racines pivotantes (D faux), 2 cotylédons (E faux)."},{q:"Concernant les drogues végétales :",o:{A:"Le « rhizome » est une racine aérienne.",B:"Le « bulbe » est une tige souterraine courte entourée de feuilles modifiées (écailles).",C:"Les « sommités fleuries » incluent uniquement les fleurs sans la tige.",D:"Le latex est un liquide sécrété par des canaux laticifères.",E:"La « drogue » désigne toujours la plante entière."},a:["B","D"],ex:"Rhizome = tige souterraine (A faux). Sommités = fleurs + haut de tige (C faux). Drogue = partie utilisée (E faux)."},{q:"Parmi les plantes suivantes, lesquelles appartiennent à la famille des Lamiaceae ?",o:{A:"Mentha piperita (Menthe poivrée)",B:"Rosmarinus officinalis (Romarin)",C:"Coriandrum sativum (Coriandre)",D:"Ocimum basilicum (Basilic)",E:"Lavandula angustifolia (Lavande)"},a:["A","B","D","E"],ex:"La coriandre est une Apiaceae (Ombellifère)."},{q:"La famille des Apiaceae (Ombellifères) comprend :",o:{A:"Ammi visnaga (Bshnikha)",B:"Daucus carota (Carotte)",C:"Foeniculum vulgare (Fenouil)",D:"Thymus vulgaris (Thym)",E:"Cuminum cyminum (Cumin)"},a:["A","C","E"],ex:"Le thym est une Lamiaceae."},{q:"Associez la plante à sa famille correcte :",o:{A:"Atractylis gummifera → Asteraceae",B:"Argania spinosa → Sapotaceae",C:"Ricinus communis → Solanaceae",D:"Crocus sativus → Iridaceae",E:"Nigella sativa → Ranunculacées"},a:["A","B","D","E"],ex:"Le Ricin est une Euphorbiaceae (C faux)."},{q:"Concernant les plantes toxiques du TP :",o:{A:"Nerium oleander appartient aux Apocynaceae.",B:"Datura stramonium appartient aux Solanaceae.",C:"Ricinus communis appartient aux Lamiaceae.",D:"Atractylis gummifera est une Astéracée toxique.",E:"Papaver somniferum produit de l'opium."},a:["A","B","D","E"],ex:"Le Ricin est une Euphorbiaceae, pas Lamiaceae."},{q:"La famille des Zingibéracées contient :",o:{A:"Le Curcuma (Curcuma longa)",B:"Le Gingembre (Zingiber officinale)",C:"La Badiane (Illicium verum)",D:"Le Safran (Crocus sativus)",E:"La Cardamome"},a:["A","B"],ex:"Badiane = Schisandraceae. Safran = Iridaceae."},{q:"Eugenia caryophyllata (Giroflier) :",o:{A:"Appartient à la famille des Myrtacées.",B:"Appartient à la famille des Lamiacées.",C:"Sa partie utilisée est le bouton floral.",D:"Sa partie utilisée est le fruit mûr.",E:"Contient de l'eugénol."},a:["A","C","E"],ex:"Myrtaceae, Boutons floraux (clous), riche en eugénol."},{q:"Linum usitatissimum (Lin) :",o:{A:"Est une Linaceae.",B:"On utilise ses graines.",C:"On utilise ses racines.",D:"Est riche en mucilages.",E:"Est riche en alcaloïdes toxiques."},a:["A","B","D"],ex:"Linaceae/Graines. Mucilages (laxatif de lest)."},{q:"Illicium verum (Badiane de Chine) :",o:{A:"Est une Apiaceae.",B:"Est une Schisandraceae (ou Illiciacées).",C:"Sa drogue est le fruit composé de follicules (fruit étoilé).",D:"Sa drogue est la racine.",E:"Est souvent falsifiée par la Badiane du Japon (toxique)."},a:["B","C","E"],ex:"Ce n'est pas une Apiaceae. Drogue = Fruit."},{q:"Artemisia absinthium et Artemisia herba-alba :",o:{A:"Appartiennent à la famille des Lamiaceae.",B:"Appartiennent à la famille des Asteraceae.",C:"Sont utilisées pour leurs parties aériennes / sommités fleuries.",D:"Sont dépourvues d'odeur.",E:"Sont des plantes aromatiques."},a:["B","C","E"],ex:"Genre Artemisia = Asteraceae. Très aromatiques."},{q:"Peganum harmala (Harmel) :",o:{A:"Appartient à la famille des Nitrariaceae.",B:"On utilise ses graines.",C:"Est une plante comestible sans danger.",D:"Est une plante toxique.",E:"Contient des alcaloïdes."},a:["A","B","D","E"],ex:"Nitrariaceae/Graines. Toxicité et Alcaloïdes."},{q:"Quelle est la partie utilisée de Crocus sativus (Safran) ?",o:{A:"Les racines.",B:"Les graines.",C:"Les stigmates du pistil.",D:"Les pétales.",E:"Les feuilles."},a:["C"],ex:"TP1 : Stigmates."},{q:"Quelle est la partie utilisée de Ammi visnaga (Khella) ?",o:{A:"Les fruits.",B:"Les racines.",C:"L'écorce.",D:"Les fleurs.",E:"Le latex."},a:["A"],ex:"TP1 : Fruits."},{q:"Pour Cinnamomum zeylanicum (Cannelle), la drogue est :",o:{A:"Le fruit.",B:"La feuille.",C:"L'écorce.",D:"La graine.",E:"Le rhizome."},a:["C"],ex:"TP1 : Ecorce."},{q:"Pour Rubia tinctorum (Garance), la partie utilisée est :",o:{A:"La fleur.",B:"La racine.",C:"La graine.",D:"La tige.",E:"Le fruit."},a:["B"],ex:"TP1 : Racines."},{q:"La partie utilisée du Gingembre et du Curcuma est :",o:{A:"Une racine tubérisée.",B:"Un bulbe.",C:"Un rhizome.",D:"Un fruit.",E:"Une graine."},a:["C"],ex:"Rhizome pour les deux Zingibéracées."},{q:"Associez la plante à la partie utilisée correcte :",o:{A:"Urginea maritima (Scille) → Bulbe",B:"Allium sativum (Ail) → Bulbe",C:"Myristica fragrans (Muscade) → Graine",D:"Papaver somniferum → Latex et Graines",E:"Juniperus communis → Racines"},a:["A","B","C","D"],ex:"Genévrier = Cônes/Baies (E faux)."},{q:"Quelle plante utilise ses « Amandes des fruits » ?",o:{A:"Olea europaea (Olivier)",B:"Argania spinosa (Arganier)",C:"Prunus dulcis (Amandier)",D:"Cuminum cyminum (Cumin)",E:"Linum usitatissimum (Lin)"},a:["B"],ex:"TP : Amandes des fruits pour l'Argan."},{q:"Pour les Lamiaceae, la partie utilisée est généralement :",o:{A:"La racine.",B:"L'écorce.",C:"Les feuilles et/ou sommités fleuries.",D:"Le fruit (akène).",E:"Le latex."},a:["C"],ex:"Majorité feuilles/sommités."},{q:"Cassia angustifolia (Séné) est utilisée pour :",o:{A:"Ses racines.",B:"Ses feuilles (folioles).",C:"Ses gousses (fruits).",D:"Son écorce.",E:"Ses fleurs."},a:["B","C"],ex:"TP1 : Feuilles, gousses."},{q:"Delphinium staphisagria (Staphisaigre) :",o:{A:"Partie utilisée : Graines.",B:"Partie utilisée : Feuilles.",C:"Famille : Ranunculaceae.",D:"Famille : Lamiaceae.",E:"Usage : Parasiticide (poux)."},a:["A","C","E"],ex:"Graines/Ranunculaceae. Usage contre les parasites."},{q:"L'Aconit Napel (Aconitum napellus) contient :",o:{A:"De la caféine.",B:"De l'aconitine.",C:"Des alcaloïdes diterpéniques.",D:"De la morphine.",E:"Des huiles essentielles."},a:["B","C"],ex:"Alcaloïde diterpénique toxique = Aconitine."},{q:"Le Podophylle (Podophyllum peltatum) :",o:{A:"Contient de la podophylline (résine).",B:"Contient des lignanes comme la podophyllotoxine.",C:"Est utilisé pour produire l'Etoposide.",D:"Contient des alcaloïdes morphiniques.",E:"Est totalement atoxique."},a:["A","B","C"],ex:"Lignanes, Podophyllotoxine précurseur de l'Etoposide."},{q:"Les alcaloïdes de l'opium incluent :",o:{A:"La Morphine.",B:"La Codéine.",C:"La Papavérine.",D:"La Quinine.",E:"La Noscapine."},a:["A","B","C","E"],ex:"Quinine vient du Quinquina (D faux)."},{q:"L'Aréquier (Areca catechu) contient :",o:{A:"Des tanins.",B:"Des alcaloïdes comme l'arécoline.",C:"Des hétérosides cardiotoniques.",D:"De l'atropine.",E:"Des principes vermifuges (ténicides)."},a:["A","B","E"],ex:"Alcaloïdes (Arécoline), Tanins, effet ténicide."},{q:"Le Gingembre et le Curcuma sont riches en :",o:{A:"Alcaloïdes toxiques.",B:"Huiles essentielles (Zingibérène).",C:"Composés phénoliques (Gingérol, Curcumine).",D:"Latex.",E:"Saponosides."},a:["B","C"],ex:"HE + Résines piquantes ou colorants."},{q:"La Belladone contient :",o:{A:"De l'Atropine.",B:"De la Scopolamine.",C:"Des alcaloïdes tropaniques.",D:"De la Nicotine uniquement.",E:"De la Morphine."},a:["A","B","C"],ex:"Alcaloïdes tropaniques (Atropine/Hyoscyamine/Scopolamine)."},{q:"Les hétérosides cardiotoniques se trouvent dans :",o:{A:"La Digitale.",B:"La Scille (Urginea maritima).",C:"Le Laurier rose (Nerium oleander).",D:"La Menthe.",E:"L'Ail."},a:["A","B","C"],ex:"Scille contient des bufadiénolides. Laurier rose aussi."},{q:"Le Paclitaxel (Taxol) :",o:{A:"Est un alcaloïde.",B:"Est un diterpène.",C:"Est extrait de l'If (Taxus).",D:"Est un poison du fuseau mitotique.",E:"Est un antibiotique."},a:["B","C","D"],ex:"Diterpène anti-cancéreux."},{q:"L'huile essentielle de Girofle est riche en :",o:{A:"Menthol.",B:"Eugénol.",C:"Cinéol.",D:"Thujone.",E:"Anéthol."},a:["B"],ex:"Eugénol majoritaire."},{q:"L'Anéthol est le constituant principal de :",o:{A:"Pimpinella anisum (Anis vert).",B:"Illicium verum (Badiane).",C:"Foeniculum vulgare (Fenouil).",D:"Mentha piperita.",E:"Syzygium aromaticum."},a:["A","B","C"],ex:"Anéthol = odeur anisée commune."},{q:"La Morphine est :",o:{A:"Un antalgique de palier 1.",B:"Un antalgique de palier 3.",C:"Un dépresseur respiratoire à forte dose.",D:"Un stimulant du transit intestinal.",E:"Un myotique (provoque myosis)."},a:["B","C","E"],ex:"Palier 3, dépression respiratoire, myosis. Elle constipe (D faux)."},{q:"La Papavérine est utilisée comme :",o:{A:"Antalgique puissant.",B:"Antispasmodique musculotrope.",C:"Antitussif.",D:"Antibiotique.",E:"Anti-inflammatoire."},a:["B"],ex:"Antispasmodique de référence."},{q:"La Codéine :",o:{A:"Est un alcaloïde de l'opium.",B:"A des propriétés antitussives.",C:"Est un analgésique de palier 2.",D:"Ne provoque aucune dépendance.",E:"Est plus puissante que la morphine."},a:["A","B","C"],ex:"Antitussif, analgésique < morphine."},{q:"L'Etoposide est indiqué dans :",o:{A:"Le traitement des verrues.",B:"Les cancers (testicules, poumons, lymphomes).",C:"L'hypertension.",D:"L'insomnie.",E:"L'inhibition de la topoisomérase II."},a:["B","E"],ex:"Inhibiteur Topo II, anticancéreux."},{q:"Ammi visnaga est la source de la Khelline, utilisée pour :",o:{A:"Ses propriétés antispasmodiques.",B:"Ses propriétés anticoagulantes.",C:"Ses propriétés sédatives.",D:"Dilater les coronaires (vasodilatateur).",E:"Traiter la constipation."},a:["A","D"],ex:"Khelline = spasmolytique et vasodilatatrice coronaire."},{q:"Aloe vera est réputé pour :",o:{A:"Son gel cicatrisant et hydratant.",B:"Son latex laxatif puissant.",C:"Ses propriétés hallucinogènes.",D:"Etre une Cactaceae.",E:"Etre une Asphodelaceae."},a:["A","B","E"],ex:"Asphodelaceae, Gel/Latex. Pas Cactaceae."},{q:"Atractylis gummifera (Chardon à glu) :",o:{A:"Est une plante comestible.",B:"Est très toxique (hépato-néphrotoxique).",C:"Cause d'intoxications mortelles au Maroc.",D:"Appartient aux Apiaceae.",E:"Appartient aux Asteraceae."},a:["B","C","E"],ex:"Asteraceae. Toxicité grave."},{q:"Les mucilages sont utilisés pour :",o:{A:"Leur effet laxatif de lest.",B:"Leur effet adoucissant/émollient.",C:"Leur toxicité cardiaque.",D:"Leur effet excitant.",E:"Gonfler au contact de l'eau."},a:["A","B","E"],ex:"Propriétés classiques des mucilages."},{q:"Ricinus communis (Ricin) :",o:{A:"L'huile de ricin est un purgatif drastique.",B:"La graine contient la Ricine (très toxique).",C:"Est une plante inoffensive.",D:"Appartient aux Euphorbiaceae.",E:"Est utilisée comme épice."},a:["A","B","D"],ex:"Euphorbiaceae. Graine mortelle (Ricine)."},{q:"Ginkgo biloba :",o:{A:"Améliore la circulation cérébrale et périphérique.",B:"Utilisé dans les troubles de la sénescence.",C:"Contient des ginkgolides.",D:"Est un arbre dioïque.",E:"Est une algue."},a:["A","B","C","D"],ex:"Arbre fossile, veinotonique."},{q:"Traitement des condylomes par usage topique :",o:{A:"Podophyllum peltatum (Podophyllotoxine).",B:"Papaver somniferum.",C:"Mentha piperita.",D:"Zingiber officinale.",E:"Aloe vera."},a:["A"],ex:"Podophyllotoxine (ex: Codyline)."},{q:"Lequel N'EST PAS associé à l'Arécoline ?",o:{A:"Augmentation du péristaltisme.",B:"Myorelaxation.",C:"Sécrétions augmentées.",D:"Effet parasympathomimétique.",E:"Effet antitussif central."},a:["E"],ex:"L'arécoline est parasympathomimétique. Antitussif = codéine/morphine."},{q:"Mentha pulegium (Menthe pouliot) :",o:{A:"Est une Lamiaceae.",B:"Utilisée pour ses feuilles.",C:"HE hépatotoxique et abortive à forte dose (Pulégone).",D:"Est une algue.",E:"Utilisée en infusion."},a:["A","B","C","E"],ex:"Toxicité connue de la pulégone."},{q:"Rosmarinus officinalis (Romarin) :",o:{A:"Arbrisseau méditerranéen.",B:"Lamiaceae.",C:"Vertus cholagogues et hépatoprotectrices.",D:"Feuilles persistantes et coriaces.",E:"On utilise ses racines."},a:["A","B","C","D"],ex:"Pas les racines."},{q:"Zingiber officinale (Gingembre) :",o:{A:"Rhizome riche en amidon.",B:"Anti-émétique.",C:"Utilisé comme épice.",D:"Famille des Solanacées.",E:"Famille des Zingibéracées."},a:["A","B","C","E"],ex:"Stomachique, Gingérol, Zingibéracées."},{q:"Curcuma longa :",o:{A:"Contient de la curcumine (pigment jaune).",B:"Anti-inflammatoire puissant.",C:"Est une racine pivotante.",D:"Est un rhizome.",E:"Toxique à faible dose."},a:["A","B","D"],ex:"Colorant jaune. Anti-inflammatoire classique."},{q:"Le Datura stramonium :",o:{A:"Fleurs en forme de trompette.",B:"Fruits épineux (pomme épineuse).",C:"Provoque hallucinations et sécheresse des muqueuses.",D:"Plante médicinale anodine.",E:"Pousse dans les décombres."},a:["A","B","C","E"],ex:"Solanaceae. Très toxique."},{q:"Nigella sativa (Habba sawda) :",o:{A:"Appartient aux Renonculacées.",B:"Graines noires et anguleuses.",C:"Stimulant immunitaire et condiment.",D:"Appartient aux Apiacées.",E:"On utilise ses fleurs."},a:["A","B","C"],ex:"Ranunculaceae/Graines."},{q:"Lavandula angustifolia (Lavande) :",o:{A:"Lamiaceae.",B:"Sommités fleuries très odorantes.",C:"Propriétés sédatives et antiseptiques.",D:"Racine tubérisée.",E:"Fruit charnu."},a:["A","B","C"],ex:"Classique aromathérapie."},{q:"Salvia officinalis (Sauge) :",o:{A:"Lamiaceae.",B:"Feuilles veloutées gris-vert.",C:"Propriétés oestrogène-like.",D:"Antiseptique.",E:"Toxique à très haute dose (thuyone)."},a:["A","B","C","D","E"],ex:"Sauge = Sauver. Thuyone neurotoxique à forte dose."},{q:"Les Gymnospermes (Genévrier, If) :",o:{A:"Ovules nus (pas d'ovaire).",B:"Produisent des cônes.",C:"L'If a une arille rouge charnue.",D:"Le Genévrier a des galbules (épice/diurétique).",E:"Sont des Angiospermes."},a:["A","B","C","D"],ex:"Gymnospermes = Graines nues."},{q:"Trigonella foenum-graecum (Fenugrec) :",o:{A:"Fabaceae.",B:"Graines anguleuses très odorantes.",C:"Propriété orexigène.",D:"Propriété hypoglycémiante.",E:"Famille des Lamiaceae."},a:["A","B","C","D"],ex:"Fabaceae. Usage diabète/appétit."},{q:"Glycyrrhiza glabra (Réglisse) :",o:{A:"Fabaceae.",B:"Racines/stolons.",C:"Saveur sucrée (Glycyrrhizine).",D:"Hypertensive à forte dose.",E:"On utilise les feuilles."},a:["A","B","C","D"],ex:"Fabaceae/Racines. HTA connu."},{q:"Origanum vulgare et Origanum majorana :",o:{A:"Lamiaceae.",B:"HE phénolées (Carvacrol/Thymol).",C:"Antiseptiques puissants.",D:"On utilise les sommités fleuries.",E:"Algues marines."},a:["A","B","C","D"],ex:"Lamiaceae, HE phénolées."},{q:"Opuntia ficus-indica (Figuier de Barbarie) :",o:{A:"Cactaceae.",B:"Fruit comestible.",C:"Cladodes (raquettes) charnues.",D:"Huile de graines précieuse.",E:"Plante toxique mortelle."},a:["A","B","C","D"],ex:"Pas toxique. Fruit et huile prisés."}];
+
+const SERIES_2=[{q:"Nomenclature binomiale (Linné) :",o:{A:"Elle se compose de « Genre + espèce ».",B:"Elle utilise uniquement des noms vernaculaires.",C:"Elle réduit le problème « un même nom pour plusieurs espèces ».",D:"Le nom du 1er descripteur peut être ajouté.",E:"On va toujours du particulier vers le général."},a:["A","C","D"],ex:"A=V ; B=F (vernaculaire != binomiale) ; C=V ; D=V ; E=F (général vers particulier)."},{q:"Rangs taxonomiques (terminaisons) :",o:{A:"« Famille » se termine par -aceae.",B:"« Ordre » se termine par -ales.",C:"« Classe » se termine par -ales.",D:"Certaines familles gardent des noms historiques.",E:"« Genre » se termine par -aceae."},a:["A","B","D"],ex:"C=F (-ales = ordre) ; E=F (-aceae = famille)."},{q:"Angiospermes (caractères) :",o:{A:"Monocotylédones : 1 cotylédon.",B:"Eudicotylédones : pollen triaperturé.",C:"Monocotylédones : nervation parallèle.",D:"Paléodicotylédones : fleurs toujours pentamères.",E:"Eudicotylédones : racines pivotantes."},a:["A","B","C","E"],ex:"D=F (pentamère = eudicots)."},{q:"Ergot de seigle (Claviceps purpurea) :",o:{A:"C'est un Ascomycète.",B:"Forme de résistance = sclérote.",C:"La drogue = sclérote.",D:"Alcaloïdes « quinoliques » type quinine.",E:"Ergométrine/ergotamine liées aux hémorragies utérines et migraine."},a:["A","B","C","E"],ex:"D=F (alcaloïdes indoliques)."},{q:"LSD :",o:{A:"Dérivé semi-synthétique.",B:"Dithylamide de l'acide lysergique.",C:"Médicament ocytocique en routine.",D:"Hallucinogène.",E:"Peut provoquer mydriase/tremblements/vomissements."},a:["A","B","D","E"],ex:"C=F."},{q:"Prêle des champs (Equisetum arvense) :",o:{A:"Drogue : parties aériennes.",B:"Contient silice.",C:"Activité diurétique.",D:"Indiquée dans l'ostéoporose/consolidation.",E:"Principes actifs = hétérosides cardiotoniques."},a:["A","B","C","D"],ex:"E=F (flavonoïdes/tanins/silice/saponosides)."},{q:"Ginkgo biloba :",o:{A:"Arbre dioïque.",B:"Feuilles à nervation dichotomique.",C:"Drogue : racines.",D:"Contient ginkgolides et biflavonoïdes.",E:"Améliore l'irrigation tissulaire."},a:["A","B","D","E"],ex:"C=F (drogue: feuilles)."},{q:"If (Taxus) :",o:{A:"T. brevifolia : drogue = écorce de tronc.",B:"T. baccata : drogue = feuilles.",C:"Toutes parties toxiques sauf l'arille.",D:"Paclitaxel = diterpène anticancéreux.",E:"L'if est une plante herbacée annuelle."},a:["A","B","C","D"],ex:"E=F (arbre/arbuste)."},{q:"Docétaxel / Taxotère :",o:{A:"Plus actif que Taxol dans l'if d'Europe.",B:"Classé comme alcaloïde indolique.",C:"Lié à Taxus baccata.",D:"Dérivé hétérosidique anthracénique.",E:"Diterpène anticancéreux."},a:["A","C","E"],ex:"B=F (diterpène) ; D=F."},{q:"Colchique officinal :",o:{A:"Plante vivace par bulbe tuniqué.",B:"Drogue : graines et bulbes.",C:"Contient colchicine (noyau tropolone).",D:"Indiqué dans la goutte aiguë.",E:"Totalement non toxique."},a:["A","B","C","D"],ex:"E=F (toxicité décrite)."},{q:"Thiocolchicoside :",o:{A:"Myorelaxant.",B:"Dérivé lié au colchicoside.",C:"Antimitotique de première intention.",D:"Appoint des contractures musculaires.",E:"Sans effets indésirables digestifs."},a:["A","B","D"],ex:"C=F ; E=F (diarrhées possibles)."},{q:"Podophylle (Podophyllum peltatum) :",o:{A:"Drogue : rhizome.",B:"Podophylline riche en lignanes.",C:"Podophyllotoxine en topique contre condylomes.",D:"Etoposide par hémisynthèse.",E:"Etoposide inhibiteur de la topoisomérase II."},a:["A","B","C","D","E"],ex:"Toutes vraies."},{q:"Pavot somnifère :",o:{A:"Fruit = capsule.",B:"Opium = latex séché des capsules.",C:"Graines = huile fixe sans alcaloïdes.",D:"Morphine = alcaloïde principal (~10-12%).",E:"Papavérine = antispasmodique."},a:["A","B","C","D","E"],ex:"Toutes vraies."},{q:"Morphine (propriétés) :",o:{A:"Antalgique palier III.",B:"Provoque myosis.",C:"Antidiarrhéique.",D:"Stimulant respiratoire puissant.",E:"Peut induire sédation/euphorie."},a:["A","B","C","E"],ex:"D=F (dépression respiratoire)."},{q:"Codéine :",o:{A:"Antitussif.",B:"Plus antalgique que la morphine.",C:"Analgésique moins fort que morphine.",D:"Administration orale/rectale possible.",E:"N'existe que sous forme injectable."},a:["A","C","D"],ex:"B=F ; E=F."},{q:"Peyotl :",o:{A:"Famille Cactaceae.",B:"Drogue : tige.",C:"Contient mescaline.",D:"Anesthésique local type cocaïne.",E:"Hallucinogène."},a:["A","B","C","E"],ex:"D=F."},{q:"Eucalyptus globulus :",o:{A:"Drogue : feuilles séchées.",B:"HE riche en 1,8-cinéole (eucalyptol).",C:"Antiseptique/mucolytique.",D:"Famille Myrtaceae.",E:"Alcaloïdes indoliques majoritaires."},a:["A","B","C","D"],ex:"E=F."},{q:"Giroflier (Eugenia caryophyllata) :",o:{A:"Famille Myrtaceae.",B:"Drogue : boutons floraux (clous).",C:"HE : eugénol.",D:"Analgésique/anti-inflammatoire.",E:"Drogue = rhizome."},a:["A","B","C","D"],ex:"E=F."},{q:"Passiflore (Passiflora incarnata) :",o:{A:"Drogue : parties aériennes sèches.",B:"Alcaloïdes indoliques + flavonoïdes.",C:"Sédative/anxiolytique.",D:"Antispasmodique.",E:"Drogue = bulbe."},a:["A","B","C","D"],ex:"E=F."},{q:"Cocaïer (Erythroxylon coca) :",o:{A:"Drogue : feuilles.",B:"Cocaïne = anesthésique local puissant.",C:"Action sympathomimétique indirecte.",D:"Utilisation thérapeutique directe recommandée.",E:"Risque de dépendance (stupéfiant)."},a:["A","B","C","E"],ex:"D=F."},{q:"Salicosides (saule/peuplier) :",o:{A:"Présents chez Salix alba.",B:"Présents chez Populus nigra.",C:"Donnent acide salicylique par hydrolyse.",D:"Sont des hétérosides cardiotoniques.",E:"Rattachés aux Salicaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Séné (Cassia angustifolia) :",o:{A:"Famille Fabaceae.",B:"Drogue : folioles et gousses.",C:"Sennosides (dérivés anthracéniques).",D:"Laxatif/purgatif.",E:"Drogue = stigmates."},a:["A","B","C","D"],ex:"E=F."},{q:"Réglisse (Glycyrrhiza glabra) :",o:{A:"Drogue : racines/rhizomes/stolons.",B:"Glycyrrhizine = saponoside triterpénique.",C:"Anti-inflammatoire/antiulcéreux.",D:"Antispasmodique et édulcorant.",E:"Famille : Myrtaceae."},a:["A","B","C","D"],ex:"E=F (Fabaceae)."},{q:"Sophora japonica :",o:{A:"Drogue : boutons floraux.",B:"Rutoside (flavonoïde).",C:"Propriété « vitaminique P ».",D:"Drogue : feuilles uniquement.",E:"Famille Fabaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Bourdaine et Cascara :",o:{A:"Bourdaine : frangulosides.",B:"Cascara : cascarosides.",C:"Drogue : écorce desséchée.",D:"Cascara plus irritante que bourdaine.",E:"Propriété principale : cardiotonique."},a:["A","B","C","D"],ex:"E=F (laxatif/purgatif)."},{q:"Cannabis :",o:{A:"Plante dioïque annuelle.",B:"Fruit = chènevis (akène).",C:"Sativa = chanvre fibres.",D:"Indica = chanvre résine.",E:"THC = principal psychoactif."},a:["A","B","C","D","E"],ex:"Toutes vraies."},{q:"Cannabis (préparations) :",o:{A:"Herbe = sommités fleuries + feuilles séchées.",B:"Résine (haschich) par battage/compression.",C:"Huile : 30-60% THC.",D:"CBD = responsable de l'effet psychotrope.",E:"Dépendance psychologique importante."},a:["A","B","C","E"],ex:"D=F (psychoactif = THC)."},{q:"CBD :",o:{A:"Anti-inflammatoire.",B:"Anxiolytique.",C:"Antipsychotique.",D:"Hallucinogène majeur.",E:"Antispasmodique/antalgique."},a:["A","B","C","E"],ex:"D=F."},{q:"Ortie dioïque (Urtica dioica) :",o:{A:"Drogue : partie aérienne et racine.",B:"Anti-inflammatoire/reminéralisante.",C:"Racine : hypertrophie bénigne de la prostate.",D:"Famille Urticaceae.",E:"Drogue = bulbe."},a:["A","B","C","D"],ex:"E=F."},{q:"Chêne-galle (Quercus lusitanica) :",o:{A:"Drogue : galle (noix de galle).",B:"Liée à piqûre de Cynips.",C:"Riche en tanins galliques.",D:"Astringent/hémostatique.",E:"Famille Zingiberaceae."},a:["A","B","C","D"],ex:"E=F (Fagaceae)."},{q:"Guimauve (Althaea officinalis) :",o:{A:"Drogue : racine.",B:"Contient mucilages.",C:"Antitussif/émollient.",D:"Alcaloïdes tropaniques.",E:"Famille Malvaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Mauve (Malva sylvestris) :",o:{A:"Drogue : fleurs et feuilles.",B:"Contient mucilages.",C:"Béchique/émolliente.",D:"Drogue : stigmates.",E:"Famille Malvaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Citronnier (Citrus limonum) :",o:{A:"Drogue : feuilles et fruit.",B:"Hespéridoside et diosmine.",C:"Antiseptique/diurétique, vitaminiques P.",D:"Famille Rutaceae.",E:"Alcaloïde principal : aconitine."},a:["A","B","C","D"],ex:"E=F."},{q:"Marronnier d'Inde :",o:{A:"Drogue : graines + écorce.",B:"Graines : aescine (saponosides).",C:"Ecorce : tanins + coumariniques.",D:"Anti-oedémateuse/anti-inflammatoire.",E:"Famille Papaveraceae."},a:["A","B","C","D"],ex:"E=F."},{q:"Camptotheca acuminata :",o:{A:"Drogue : écorce.",B:"Camptothécine (alcaloïde quinolique).",C:"Abandonnée pour toxicité (1970).",D:"Dérivés : irinotécan/topotécan.",E:"Utilisée comme laxatif anthracénique."},a:["A","B","C","D"],ex:"E=F."},{q:"Gentiane (Gentiana lutea) :",o:{A:"Drogue : racine.",B:"Gentiopicroside = hétéroside amer.",C:"Tonique/stomachique/apéritif.",D:"Famille Gentianaceae.",E:"Drogue : boutons floraux."},a:["A","B","C","D"],ex:"E=F."},{q:"Pervenche de Madagascar :",o:{A:"Famille Apocynaceae.",B:"Drogue : parties aériennes.",C:"Alcaloïdes binaires (catharantine + vindoline).",D:"Vinblastine/Vincristine antimitotiques.",E:"C'est un conifère."},a:["A","B","C","D"],ex:"E=F."},{q:"Rauwolfia :",o:{A:"Réserpine : antihypertenseur.",B:"Ajmalicine : vasodilatateur périphérique.",C:"Yohimbine : hypotension/impotence.",D:"Drogue = stigmates.",E:"Famille = Solanaceae."},a:["A","B","C"],ex:"D=F ; E=F."},{q:"Digitale (Digitalis) :",o:{A:"Drogue : feuilles.",B:"Hétérosides cardiotoniques (cardénolides).",C:"Digitaline = D. purpurea.",D:"Digoxine = D. lanata.",E:"Propriété : laxatif irritant."},a:["A","B","C","D"],ex:"E=F."},{q:"Solanacées à tropanes :",o:{A:"Belladone : atropine/hyoscyamine/scopolamine.",B:"Datura : atropine/hyoscyamine/scopolamine.",C:"Jusquiame noire : tropanes aussi.",D:"Tabac : nicotine.",E:"Tabac : cardénolide cardiotonique."},a:["A","B","C","D"],ex:"E=F."},{q:"Absinthe (Artemisia absinthium) :",o:{A:"Famille Asteraceae.",B:"Drogue : feuilles et sommités fleuries.",C:"HE riche en alpha-thuyones.",D:"Epileptogène à forte dose.",E:"Drogue : bulbe."},a:["A","B","C","D"],ex:"E=F."},{q:"Artichaut (Cynara scolymus) :",o:{A:"Famille Asteraceae.",B:"Drogue : feuilles.",C:"Contient cynarine et flavonoïdes.",D:"Cholérétique/diurétique.",E:"Principal alcaloïde : morphine."},a:["A","B","C","D"],ex:"E=F."},{q:"TP - Safran (Crocus sativus) :",o:{A:"Famille Iridaceae.",B:"Partie utilisée : stigmates du pistil.",C:"Partie utilisée : feuilles.",D:"Partie utilisée : bulbe.",E:"Correspond à l'entrée TP."},a:["A","B","E"],ex:"C=F ; D=F."},{q:"TP - Clou de girofle :",o:{A:"Eugenia caryophylata.",B:"Famille Myrtaceae.",C:"Partie utilisée : boutons floraux.",D:"Partie utilisée : rhizome.",E:"Fait partie du TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Réglisse :",o:{A:"Glycyrrhiza glabra.",B:"Famille Fabaceae.",C:"Partie utilisée : racines.",D:"Famille Apiaceae.",E:"TP1 la mentionne."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Datura :",o:{A:"Datura stramonium.",B:"Famille Solanaceae.",C:"Partie utilisée : feuilles et graines.",D:"Partie utilisée : stigmates.",E:"Présent dans TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Ricin :",o:{A:"Ricinus communis.",B:"Famille Euphorbiaceae.",C:"Partie utilisée : graines (huile).",D:"Famille Lamiaceae.",E:"Présent en TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Arganier :",o:{A:"Argania spinosa.",B:"Famille Sapotaceae.",C:"Amandes des fruits (graines).",D:"Partie utilisée : capitules floraux.",E:"Présent dans TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Badiane :",o:{A:"Illicium verum.",B:"Partie utilisée : fruits étoilés.",C:"Famille Schisandraceae.",D:"Partie utilisée : racines.",E:"Présente dans TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Pavot :",o:{A:"Papaver somniferum.",B:"Famille Papaveraceae.",C:"Partie utilisée : latex du fruit.",D:"Partie utilisée : feuilles seulement.",E:"Présent en TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Menthe poivrée :",o:{A:"Mentha piperita.",B:"Famille Lamiaceae.",C:"Partie utilisée : feuilles.",D:"Famille Apiaceae.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Lavande :",o:{A:"Lavandula angustifolia.",B:"Famille Lamiaceae.",C:"Partie utilisée : sommités fleuries.",D:"Partie utilisée : racines.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Camomille allemande :",o:{A:"Matricaria chamomilla.",B:"Famille Asteraceae.",C:"Partie utilisée : capitules floraux.",D:"Famille Verbenaceae.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Verveine citronnée :",o:{A:"Aloysia citrodora.",B:"Famille Verbenaceae.",C:"Partie utilisée : feuilles.",D:"Famille Lamiaceae.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Aloe vera :",o:{A:"Aloe vera.",B:"Famille Asphodelaceae.",C:"Partie utilisée : gel + latex.",D:"Partie utilisée : stigmates.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Laurier rose :",o:{A:"Nerium oleander.",B:"Famille Apocynaceae.",C:"Partie utilisée : feuilles (très toxiques).",D:"Famille Asteraceae.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Gingembre :",o:{A:"Zingiber officinale.",B:"Famille Zingiberaceae.",C:"Partie utilisée : rhizome.",D:"Partie utilisée : boutons floraux.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Curcuma :",o:{A:"Curcuma longa.",B:"Famille Zingiberaceae.",C:"Partie utilisée : rhizome.",D:"Famille Myrtaceae.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Ail :",o:{A:"Allium sativum.",B:"Famille Amaryllidaceae.",C:"Partie utilisée : bulbe.",D:"Partie utilisée : racines.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Oignon :",o:{A:"Allium cepa.",B:"Famille Amaryllidaceae.",C:"Partie utilisée : bulbe.",D:"Famille Apiaceae.",E:"Présent dans TP2."},a:["A","B","C","E"],ex:"D=F."}];
+
+let state={screen:"home",seriesName:"",questions:[],idx:0,selected:[],validated:false,isCorrect:false,correct:0,wrong:0,retryQueue:[],retryCount:0};
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+function startSeries(n){
+  const data=n===1?SERIES_1:SERIES_2;
+  state={screen:"quiz",seriesName:"Série "+n,seriesNum:n,questions:shuffle(data),idx:0,selected:[],validated:false,isCorrect:false,correct:0,wrong:0,retryQueue:[],retryCount:0};
+  render();
+}
+function goHome(){state.screen="home";render();}
+
+function toggleOption(letter){
+  if(state.validated)return;
+  const i=state.selected.indexOf(letter);
+  if(i>-1)state.selected.splice(i,1);else state.selected.push(letter);
+  render();
+}
+
+function validate(){
+  if(state.selected.length===0||state.validated)return;
+  const q=state.questions[state.idx];
+  const ok=state.selected.length===q.a.length&&state.selected.every(s=>q.a.includes(s));
+  state.isCorrect=ok;state.validated=true;
+  if(ok)state.correct++;else state.wrong++;
+  render();
+}
+
+function next(){
+  if(state.idx+1<state.questions.length){
+    state.idx++;state.selected=[];state.validated=false;
+  }else if(state.retryQueue.length>0){
+    const nq=shuffle(state.retryQueue);
+    state.questions=state.questions.concat(nq);
+    state.retryQueue=[];
+    state.idx++;state.selected=[];state.validated=false;
+  }else{state.screen="result";}
+  render();
+}
+
+function retryLater(){
+  state.retryQueue.push(state.questions[state.idx]);
+  state.retryCount++;
+  next();
+}
+
+function render(){
+  const home=document.getElementById("homeScreen");
+  const quiz=document.getElementById("quizScreen");
+  const result=document.getElementById("resultScreen");
+  const back=document.getElementById("backBtn");
+
+  home.className=state.screen==="home"?"anim":"hidden";
+  quiz.className=state.screen==="quiz"?"anim":"hidden";
+  result.className=state.screen==="result"?"anim":"hidden";
+  back.className=state.screen==="quiz"?"back-btn":"back-btn hidden";
+
+  if(state.screen==="quiz")renderQuiz();
+  if(state.screen==="result")renderResult();
+}
+
+function renderQuiz(){
+  const q=state.questions[state.idx];
+  const total=state.questions.length;
+  const pct=total>0?(state.idx/total)*100:0;
+  const letters=["A","B","C","D","E"].filter(l=>q.o[l]);
+
+  let html=`
+    <div class="progress">
+      <div class="progress-top">
+        <span>Question ${Math.min(state.idx+1,total)} sur ${total}</span>
+        <span><span class="correct">Correct : ${state.correct}</span>&nbsp;&nbsp;&nbsp;<span class="wrong">Faux : ${state.wrong}</span></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="q-label">${state.seriesName} — Q${state.idx+1}</div>
+    <div class="card"><div class="q-text">${q.q}</div></div>
+    <div class="options">`;
+
+  letters.forEach(l=>{
+    let cls="option";
+    let badgeCls="badge";
+    let textColor="#4b5563";
+    let textWeight=500;
+    const isSel=state.selected.includes(l);
+    const isAns=q.a.includes(l);
+
+    if(!state.validated){
+      if(isSel){cls+=" selected";textColor="#111827";}
+    }else{
+      cls+=" disabled";
+      if(isAns){cls+=" correct-answer";textColor="#15803d";textWeight=700;}
+      else if(isSel&&!isAns){cls+=" wrong-answer";textColor="#b91c1c";textWeight=700;}
+      else{cls+=" dimmed";}
+    }
+
+    html+=`<div class="${cls}" onclick="toggleOption('${l}')">
+      <div class="badge">${l}</div>
+      <div class="option-text" style="color:${textColor};font-weight:${textWeight}">${q.o[l]}</div>
+    </div>`;
+  });
+
+  html+=`</div>`;
+
+  if(state.validated){
+    const ec=state.isCorrect?"is-correct":"is-wrong";
+    const ic=state.isCorrect?"green":"red";
+    const sym=state.isCorrect?"✓":"✗";
+    const label=state.isCorrect?"Correct":"Incorrect";
+    html+=`<div class="explanation ${ec}">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="icon-badge ${ic}">${sym}</div>
+        <span class="status ${ic}">${label}</span>
+      </div>
+      <div class="body"><strong>Réponses : ${q.a.join(", ")}</strong><br>${q.ex}</div>
+    </div>`;
+  }
+
+  if(!state.validated){
+    const dis=state.selected.length===0;
+    html+=`<button class="btn btn-primary" ${dis?"disabled":""} onclick="validate()">Valider</button>`;
+  }else{
+    html+=`<div class="btn-row">`;
+    if(!state.isCorrect){
+      html+=`<button class="btn btn-secondary" onclick="retryLater()">Repasser plus tard</button>`;
+    }
+    const label=state.idx+1>=total&&state.retryQueue.length===0?"Voir résultats":"Suivant";
+    html+=`<button class="btn btn-primary" onclick="next()">${label}</button></div>`;
+  }
+
+  if(state.retryQueue.length>0){
+    html+=`<div class="retry-info">${state.retryQueue.length} question${state.retryQueue.length>1?"s":""} à repasser en fin de série</div>`;
+  }
+
+  document.getElementById("quizScreen").innerHTML=html;
+}
+
+function renderResult(){
+  const total=state.correct+state.wrong;
+  const pct=total>0?Math.round((state.correct/total)*100):0;
+  const grade=pct>=90?"S":pct>=80?"A":pct>=70?"B":pct>=60?"C":pct>=50?"D":"F";
+  const gc={S:"#111827",A:"#16a34a",B:"#16a34a",C:"#6b7280",D:"#dc2626",F:"#dc2626"}[grade];
+
+  document.getElementById("resultScreen").innerHTML=`
+    <div class="results">
+      <div class="grade-circle"><span class="grade-letter" style="color:${gc}">${grade}</span></div>
+      <div class="grade-label">Rang obtenu</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value" style="color:#111827">${pct}%</div><div class="stat-label">Score</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:#16a34a">${state.correct}/${total}</div><div class="stat-label">Correctes</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:#dc2626">${state.retryCount}</div><div class="stat-label">Reprises</div></div>
+      </div>
+      <div class="result-btns">
+        <button class="btn btn-secondary" onclick="startSeries(${state.seriesNum})">Recommencer</button>
+        <button class="btn btn-primary" onclick="goHome()">Accueil</button>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
