@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Botanique Quiz</title>
+<title>Biochimie Quiz - Glucides</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,sans-serif;font-style:normal}
@@ -111,8 +111,8 @@ body{background:#f8f9fa;color:#111827;min-height:100vh;display:flex;justify-cont
 <body>
 <div class="wrap">
   <div class="header">
-    <h1>Botanique Quiz</h1>
-    <div class="sub">Plantes Medicinales - QCM</div>
+    <h1>Biochimie Quiz</h1>
+    <div class="sub">Métabolisme des Glucides - QCM</div>
     <button class="back-btn hidden" id="backBtn" onclick="goHome()">← Retour</button>
   </div>
 
@@ -122,63 +122,27 @@ body{background:#f8f9fa;color:#111827;min-height:100vh;display:flex;justify-cont
     <button class="series-btn" onclick="startSeries(1)">
       <div class="series-num">1</div>
       <div class="series-info">
-        <div class="name">Série 1</div>
-        <div class="desc">Cours + TP fusionnés</div>
-        <div class="meta">Familles, drogues, chimie, propriétés — 60 questions</div>
+        <div class="name">Série 1 (Q1-20)</div>
+        <div class="desc">Digestion, Glycolyse & Cycle de Krebs</div>
+        <div class="meta">Enzymes, régulation et transporteurs — 20 questions</div>
       </div>
       <div class="series-arrow">→</div>
     </button>
     <button class="series-btn" onclick="startSeries(2)">
       <div class="series-num">2</div>
       <div class="series-info">
-        <div class="name">Série 2</div>
-        <div class="desc">Cours approfondi + TP</div>
-        <div class="meta">Ergot, Cannabis, Digitale, Podophylle... — 60 questions</div>
+        <div class="name">Série 2 (Q21-40)</div>
+        <div class="desc">Chaîne respiratoire & Métabolismes spécifiques</div>
+        <div class="meta">Néoglucogenèse, PPP, Glycogène, Galactose — 20 questions</div>
       </div>
       <div class="series-arrow">→</div>
     </button>
-    <button class="series-btn" onclick="startSeries(3)">
-      <div class="series-num">A</div>
-      <div class="series-info">
-        <div class="name">Examen TP – Série A</div>
-        <div class="desc">QCM Examen TP</div>
-        <div class="meta">Noms scientifiques, familles, parties utilisées — 20 questions</div>
-      </div>
-      <div class="series-arrow">→</div>
-    </button>
-    <button class="series-btn" onclick="startSeries(4)">
-      <div class="series-num">B</div>
-      <div class="series-info">
-        <div class="name">Examen TP – Série B</div>
-        <div class="desc">QCM Examen TP</div>
-        <div class="meta">Noms scientifiques, familles, parties utilisées — 20 questions</div>
-      </div>
-      <div class="series-arrow">→</div>
-    </button>
-    <button class="series-btn" onclick="startSeries(5)">
-      <div class="series-num">C</div>
-      <div class="series-info">
-        <div class="name">Examen TP – Série C</div>
-        <div class="desc">QCM Examen TP</div>
-        <div class="meta">Linaceae, Apiaceae, Verbenaceae, nomenclature — 20 questions</div>
-      </div>
-      <div class="series-arrow">→</div>
-    </button>
-    <button class="series-btn" onclick="startSeries(6)">
-      <div class="series-num">D</div>
-      <div class="series-info">
-        <div class="name">Examen TP – Série D</div>
-        <div class="desc">QCM Examen TP</div>
-        <div class="meta">Oleaceae, Solanaceae, Amaryllidaceae, systématique — 20 questions</div>
-      </div>
-      <div class="series-arrow">→</div>
-    </button>
+    
     <div class="how-it-works">
-      <h3>Comment ca marche</h3>
-      <div class="how-step"><span class="num">1.</span><span>Sélectionne les bonnes réponses puis appuie sur Valider</span></div>
-      <div class="how-step"><span class="num">2.</span><span>Explication affichée après chaque réponse</span></div>
-      <div class="how-step"><span class="num">3.</span><span>Si tu te trompes : « Repasser plus tard » remet la question en fin de série</span></div>
-      <div class="how-step"><span class="num">4.</span><span>Score final avec rang S / A / B / C / D / F</span></div>
+      <h3>Comment ça marche</h3>
+      <div class="how-step"><span class="num">1.</span><span>Sélectionne toutes les affirmations VRAIES.</span></div>
+      <div class="how-step"><span class="num">2.</span><span>Appuie sur Valider pour voir les explications.</span></div>
+      <div class="how-step"><span class="num">3.</span><span>Si tu te trompes : « Repasser plus tard » remet la question en fin de série.</span></div>
     </div>
   </div>
 
@@ -190,161 +154,258 @@ body{background:#f8f9fa;color:#111827;min-height:100vh;display:flex;justify-cont
 </div>
 
 <script>
-const SERIES_1=[{q:"Concernant la nomenclature binaire de Linné :",o:{A:"Elle attribue trois noms à chaque espèce végétale.",B:"Le premier nom correspond à l'espèce et le second au genre.",C:"Elle permet d'éviter les confusions liées aux noms vernaculaires.",D:"Le nom du descripteur est souvent mentionné en abrégé à la fin.",E:"Elle classe les végétaux uniquement selon leur couleur."},a:["C","D"],ex:"Le binôme est Genre + Espèce (B faux). Elle remplace les noms vernaculaires confus (C vrai). Le descripteur est à la fin (D vrai)."},{q:"Dans la classification phylogénétique (APG) :",o:{A:"Elle est basée uniquement sur la morphologie florale.",B:"Elle utilise des caractères moléculaires (ADN, ARN).",C:"Elle classe les êtres vivants en 3 domaines : Archéobactéries, Eubactéries et Eucaryotes.",D:"Les Monocots possèdent des graines à 2 cotylédons.",E:"Les Eudicots ont un pollen triaperturé."},a:["B","C","E"],ex:"APG est moléculaire (A faux). Monocots = 1 cotylédon (D faux). Eudicots = pollen triaperturé (E vrai)."},{q:"Les caractéristiques des Monocots incluent :",o:{A:"Une racine pivotante.",B:"Des fleurs généralement trimères (pièces par 3).",C:"Des feuilles à nervation parallèle.",D:"Un pollen triaperturé.",E:"Une tige rarement ramifiée."},a:["B","C","E"],ex:"Racines fasciculées (A faux), pollen monoaperturé (D faux)."},{q:"Les caractéristiques des Eudicots incluent :",o:{A:"Des fleurs pentamères (pièces par 5).",B:"Des feuilles à nervation pennée.",C:"Des faisceaux libéro-ligneux disposés en cercle (annulaires).",D:"Un système racinaire fasciculé.",E:"Des graines à un seul cotylédon."},a:["A","B","C"],ex:"Racines pivotantes (D faux), 2 cotylédons (E faux)."},{q:"Concernant les drogues végétales :",o:{A:"Le « rhizome » est une racine aérienne.",B:"Le « bulbe » est une tige souterraine courte entourée de feuilles modifiées (écailles).",C:"Les « sommités fleuries » incluent uniquement les fleurs sans la tige.",D:"Le latex est un liquide sécrété par des canaux laticifères.",E:"La « drogue » désigne toujours la plante entière."},a:["B","D"],ex:"Rhizome = tige souterraine (A faux). Sommités = fleurs + haut de tige (C faux). Drogue = partie utilisée (E faux)."},{q:"Parmi les plantes suivantes, lesquelles appartiennent à la famille des Lamiaceae ?",o:{A:"Mentha piperita (Menthe poivrée)",B:"Rosmarinus officinalis (Romarin)",C:"Coriandrum sativum (Coriandre)",D:"Ocimum basilicum (Basilic)",E:"Lavandula angustifolia (Lavande)"},a:["A","B","D","E"],ex:"La coriandre est une Apiaceae (Ombellifère)."},{q:"La famille des Apiaceae (Ombellifères) comprend :",o:{A:"Ammi visnaga (Bshnikha)",B:"Daucus carota (Carotte)",C:"Foeniculum vulgare (Fenouil)",D:"Thymus vulgaris (Thym)",E:"Cuminum cyminum (Cumin)"},a:["A","C","E"],ex:"Le thym est une Lamiaceae."},{q:"Associez la plante à sa famille correcte :",o:{A:"Atractylis gummifera → Asteraceae",B:"Argania spinosa → Sapotaceae",C:"Ricinus communis → Solanaceae",D:"Crocus sativus → Iridaceae",E:"Nigella sativa → Ranunculacées"},a:["A","B","D","E"],ex:"Le Ricin est une Euphorbiaceae (C faux)."},{q:"Concernant les plantes toxiques du TP :",o:{A:"Nerium oleander appartient aux Apocynaceae.",B:"Datura stramonium appartient aux Solanaceae.",C:"Ricinus communis appartient aux Lamiaceae.",D:"Atractylis gummifera est une Astéracée toxique.",E:"Papaver somniferum produit de l'opium."},a:["A","B","D","E"],ex:"Le Ricin est une Euphorbiaceae, pas Lamiaceae."},{q:"La famille des Zingibéracées contient :",o:{A:"Le Curcuma (Curcuma longa)",B:"Le Gingembre (Zingiber officinale)",C:"La Badiane (Illicium verum)",D:"Le Safran (Crocus sativus)",E:"La Cardamome"},a:["A","B"],ex:"Badiane = Schisandraceae. Safran = Iridaceae."},{q:"Eugenia caryophyllata (Giroflier) :",o:{A:"Appartient à la famille des Myrtacées.",B:"Appartient à la famille des Lamiacées.",C:"Sa partie utilisée est le bouton floral.",D:"Sa partie utilisée est le fruit mûr.",E:"Contient de l'eugénol."},a:["A","C","E"],ex:"Myrtaceae, Boutons floraux (clous), riche en eugénol."},{q:"Linum usitatissimum (Lin) :",o:{A:"Est une Linaceae.",B:"On utilise ses graines.",C:"On utilise ses racines.",D:"Est riche en mucilages.",E:"Est riche en alcaloïdes toxiques."},a:["A","B","D"],ex:"Linaceae/Graines. Mucilages (laxatif de lest)."},{q:"Illicium verum (Badiane de Chine) :",o:{A:"Est une Apiaceae.",B:"Est une Schisandraceae (ou Illiciacées).",C:"Sa drogue est le fruit composé de follicules (fruit étoilé).",D:"Sa drogue est la racine.",E:"Est souvent falsifiée par la Badiane du Japon (toxique)."},a:["B","C","E"],ex:"Ce n'est pas une Apiaceae. Drogue = Fruit."},{q:"Artemisia absinthium et Artemisia herba-alba :",o:{A:"Appartiennent à la famille des Lamiaceae.",B:"Appartiennent à la famille des Asteraceae.",C:"Sont utilisées pour leurs parties aériennes / sommités fleuries.",D:"Sont dépourvues d'odeur.",E:"Sont des plantes aromatiques."},a:["B","C","E"],ex:"Genre Artemisia = Asteraceae. Très aromatiques."},{q:"Peganum harmala (Harmel) :",o:{A:"Appartient à la famille des Nitrariaceae.",B:"On utilise ses graines.",C:"Est une plante comestible sans danger.",D:"Est une plante toxique.",E:"Contient des alcaloïdes."},a:["A","B","D","E"],ex:"Nitrariaceae/Graines. Toxicité et Alcaloïdes."},{q:"Quelle est la partie utilisée de Crocus sativus (Safran) ?",o:{A:"Les racines.",B:"Les graines.",C:"Les stigmates du pistil.",D:"Les pétales.",E:"Les feuilles."},a:["C"],ex:"TP1 : Stigmates."},{q:"Quelle est la partie utilisée de Ammi visnaga (Khella) ?",o:{A:"Les fruits.",B:"Les racines.",C:"L'écorce.",D:"Les fleurs.",E:"Le latex."},a:["A"],ex:"TP1 : Fruits."},{q:"Pour Cinnamomum zeylanicum (Cannelle), la drogue est :",o:{A:"Le fruit.",B:"La feuille.",C:"L'écorce.",D:"La graine.",E:"Le rhizome."},a:["C"],ex:"TP1 : Ecorce."},{q:"Pour Rubia tinctorum (Garance), la partie utilisée est :",o:{A:"La fleur.",B:"La racine.",C:"La graine.",D:"La tige.",E:"Le fruit."},a:["B"],ex:"TP1 : Racines."},{q:"La partie utilisée du Gingembre et du Curcuma est :",o:{A:"Une racine tubérisée.",B:"Un bulbe.",C:"Un rhizome.",D:"Un fruit.",E:"Une graine."},a:["C"],ex:"Rhizome pour les deux Zingibéracées."},{q:"Associez la plante à la partie utilisée correcte :",o:{A:"Urginea maritima (Scille) → Bulbe",B:"Allium sativum (Ail) → Bulbe",C:"Myristica fragrans (Muscade) → Graine",D:"Papaver somniferum → Latex et Graines",E:"Juniperus communis → Racines"},a:["A","B","C","D"],ex:"Genévrier = Cônes/Baies (E faux)."},{q:"Quelle plante utilise ses « Amandes des fruits » ?",o:{A:"Olea europaea (Olivier)",B:"Argania spinosa (Arganier)",C:"Prunus dulcis (Amandier)",D:"Cuminum cyminum (Cumin)",E:"Linum usitatissimum (Lin)"},a:["B"],ex:"TP : Amandes des fruits pour l'Argan."},{q:"Pour les Lamiaceae, la partie utilisée est généralement :",o:{A:"La racine.",B:"L'écorce.",C:"Les feuilles et/ou sommités fleuries.",D:"Le fruit (akène).",E:"Le latex."},a:["C"],ex:"Majorité feuilles/sommités."},{q:"Cassia angustifolia (Séné) est utilisée pour :",o:{A:"Ses racines.",B:"Ses feuilles (folioles).",C:"Ses gousses (fruits).",D:"Son écorce.",E:"Ses fleurs."},a:["B","C"],ex:"TP1 : Feuilles, gousses."},{q:"Delphinium staphisagria (Staphisaigre) :",o:{A:"Partie utilisée : Graines.",B:"Partie utilisée : Feuilles.",C:"Famille : Ranunculaceae.",D:"Famille : Lamiaceae.",E:"Usage : Parasiticide (poux)."},a:["A","C","E"],ex:"Graines/Ranunculaceae. Usage contre les parasites."},{q:"L'Aconit Napel (Aconitum napellus) contient :",o:{A:"De la caféine.",B:"De l'aconitine.",C:"Des alcaloïdes diterpéniques.",D:"De la morphine.",E:"Des huiles essentielles."},a:["B","C"],ex:"Alcaloïde diterpénique toxique = Aconitine."},{q:"Le Podophylle (Podophyllum peltatum) :",o:{A:"Contient de la podophylline (résine).",B:"Contient des lignanes comme la podophyllotoxine.",C:"Est utilisé pour produire l'Etoposide.",D:"Contient des alcaloïdes morphiniques.",E:"Est totalement atoxique."},a:["A","B","C"],ex:"Lignanes, Podophyllotoxine précurseur de l'Etoposide."},{q:"Les alcaloïdes de l'opium incluent :",o:{A:"La Morphine.",B:"La Codéine.",C:"La Papavérine.",D:"La Quinine.",E:"La Noscapine."},a:["A","B","C","E"],ex:"Quinine vient du Quinquina (D faux)."},{q:"L'Aréquier (Areca catechu) contient :",o:{A:"Des tanins.",B:"Des alcaloïdes comme l'arécoline.",C:"Des hétérosides cardiotoniques.",D:"De l'atropine.",E:"Des principes vermifuges (ténicides)."},a:["A","B","E"],ex:"Alcaloïdes (Arécoline), Tanins, effet ténicide."},{q:"Le Gingembre et le Curcuma sont riches en :",o:{A:"Alcaloïdes toxiques.",B:"Huiles essentielles (Zingibérène).",C:"Composés phénoliques (Gingérol, Curcumine).",D:"Latex.",E:"Saponosides."},a:["B","C"],ex:"HE + Résines piquantes ou colorants."},{q:"La Belladone contient :",o:{A:"De l'Atropine.",B:"De la Scopolamine.",C:"Des alcaloïdes tropaniques.",D:"De la Nicotine uniquement.",E:"De la Morphine."},a:["A","B","C"],ex:"Alcaloïdes tropaniques (Atropine/Hyoscyamine/Scopolamine)."},{q:"Les hétérosides cardiotoniques se trouvent dans :",o:{A:"La Digitale.",B:"La Scille (Urginea maritima).",C:"Le Laurier rose (Nerium oleander).",D:"La Menthe.",E:"L'Ail."},a:["A","B","C"],ex:"Scille contient des bufadiénolides. Laurier rose aussi."},{q:"Le Paclitaxel (Taxol) :",o:{A:"Est un alcaloïde.",B:"Est un diterpène.",C:"Est extrait de l'If (Taxus).",D:"Est un poison du fuseau mitotique.",E:"Est un antibiotique."},a:["B","C","D"],ex:"Diterpène anti-cancéreux."},{q:"L'huile essentielle de Girofle est riche en :",o:{A:"Menthol.",B:"Eugénol.",C:"Cinéol.",D:"Thujone.",E:"Anéthol."},a:["B"],ex:"Eugénol majoritaire."},{q:"L'Anéthol est le constituant principal de :",o:{A:"Pimpinella anisum (Anis vert).",B:"Illicium verum (Badiane).",C:"Foeniculum vulgare (Fenouil).",D:"Mentha piperita.",E:"Syzygium aromaticum."},a:["A","B","C"],ex:"Anéthol = odeur anisée commune."},{q:"La Morphine est :",o:{A:"Un antalgique de palier 1.",B:"Un antalgique de palier 3.",C:"Un dépresseur respiratoire à forte dose.",D:"Un stimulant du transit intestinal.",E:"Un myotique (provoque myosis)."},a:["B","C","E"],ex:"Palier 3, dépression respiratoire, myosis. Elle constipe (D faux)."},{q:"La Papavérine est utilisée comme :",o:{A:"Antalgique puissant.",B:"Antispasmodique musculotrope.",C:"Antitussif.",D:"Antibiotique.",E:"Anti-inflammatoire."},a:["B"],ex:"Antispasmodique de référence."},{q:"La Codéine :",o:{A:"Est un alcaloïde de l'opium.",B:"A des propriétés antitussives.",C:"Est un analgésique de palier 2.",D:"Ne provoque aucune dépendance.",E:"Est plus puissante que la morphine."},a:["A","B","C"],ex:"Antitussif, analgésique < morphine."},{q:"L'Etoposide est indiqué dans :",o:{A:"Le traitement des verrues.",B:"Les cancers (testicules, poumons, lymphomes).",C:"L'hypertension.",D:"L'insomnie.",E:"L'inhibition de la topoisomérase II."},a:["B","E"],ex:"Inhibiteur Topo II, anticancéreux."},{q:"Ammi visnaga est la source de la Khelline, utilisée pour :",o:{A:"Ses propriétés antispasmodiques.",B:"Ses propriétés anticoagulantes.",C:"Ses propriétés sédatives.",D:"Dilater les coronaires (vasodilatateur).",E:"Traiter la constipation."},a:["A","D"],ex:"Khelline = spasmolytique et vasodilatatrice coronaire."},{q:"Aloe vera est réputé pour :",o:{A:"Son gel cicatrisant et hydratant.",B:"Son latex laxatif puissant.",C:"Ses propriétés hallucinogènes.",D:"Etre une Cactaceae.",E:"Etre une Asphodelaceae."},a:["A","B","E"],ex:"Asphodelaceae, Gel/Latex. Pas Cactaceae."},{q:"Atractylis gummifera (Chardon à glu) :",o:{A:"Est une plante comestible.",B:"Est très toxique (hépato-néphrotoxique).",C:"Cause d'intoxications mortelles au Maroc.",D:"Appartient aux Apiaceae.",E:"Appartient aux Asteraceae."},a:["B","C","E"],ex:"Asteraceae. Toxicité grave."},{q:"Les mucilages sont utilisés pour :",o:{A:"Leur effet laxatif de lest.",B:"Leur effet adoucissant/émollient.",C:"Leur toxicité cardiaque.",D:"Leur effet excitant.",E:"Gonfler au contact de l'eau."},a:["A","B","E"],ex:"Propriétés classiques des mucilages."},{q:"Ricinus communis (Ricin) :",o:{A:"L'huile de ricin est un purgatif drastique.",B:"La graine contient la Ricine (très toxique).",C:"Est une plante inoffensive.",D:"Appartient aux Euphorbiaceae.",E:"Est utilisée comme épice."},a:["A","B","D"],ex:"Euphorbiaceae. Graine mortelle (Ricine)."},{q:"Ginkgo biloba :",o:{A:"Améliore la circulation cérébrale et périphérique.",B:"Utilisé dans les troubles de la sénescence.",C:"Contient des ginkgolides.",D:"Est un arbre dioïque.",E:"Est une algue."},a:["A","B","C","D"],ex:"Arbre fossile, veinotonique."},{q:"Traitement des condylomes par usage topique :",o:{A:"Podophyllum peltatum (Podophyllotoxine).",B:"Papaver somniferum.",C:"Mentha piperita.",D:"Zingiber officinale.",E:"Aloe vera."},a:["A"],ex:"Podophyllotoxine (ex: Codyline)."},{q:"Lequel N'EST PAS associé à l'Arécoline ?",o:{A:"Augmentation du péristaltisme.",B:"Myorelaxation.",C:"Sécrétions augmentées.",D:"Effet parasympathomimétique.",E:"Effet antitussif central."},a:["E"],ex:"L'arécoline est parasympathomimétique. Antitussif = codéine/morphine."},{q:"Mentha pulegium (Menthe pouliot) :",o:{A:"Est une Lamiaceae.",B:"Utilisée pour ses feuilles.",C:"HE hépatotoxique et abortive à forte dose (Pulégone).",D:"Est une algue.",E:"Utilisée en infusion."},a:["A","B","C","E"],ex:"Toxicité connue de la pulégone."},{q:"Rosmarinus officinalis (Romarin) :",o:{A:"Arbrisseau méditerranéen.",B:"Lamiaceae.",C:"Vertus cholagogues et hépatoprotectrices.",D:"Feuilles persistantes et coriaces.",E:"On utilise ses racines."},a:["A","B","C","D"],ex:"Pas les racines."},{q:"Zingiber officinale (Gingembre) :",o:{A:"Rhizome riche en amidon.",B:"Anti-émétique.",C:"Utilisé comme épice.",D:"Famille des Solanacées.",E:"Famille des Zingibéracées."},a:["A","B","C","E"],ex:"Stomachique, Gingérol, Zingibéracées."},{q:"Curcuma longa :",o:{A:"Contient de la curcumine (pigment jaune).",B:"Anti-inflammatoire puissant.",C:"Est une racine pivotante.",D:"Est un rhizome.",E:"Toxique à faible dose."},a:["A","B","D"],ex:"Colorant jaune. Anti-inflammatoire classique."},{q:"Le Datura stramonium :",o:{A:"Fleurs en forme de trompette.",B:"Fruits épineux (pomme épineuse).",C:"Provoque hallucinations et sécheresse des muqueuses.",D:"Plante médicinale anodine.",E:"Pousse dans les décombres."},a:["A","B","C","E"],ex:"Solanaceae. Très toxique."},{q:"Nigella sativa (Habba sawda) :",o:{A:"Appartient aux Renonculacées.",B:"Graines noires et anguleuses.",C:"Stimulant immunitaire et condiment.",D:"Appartient aux Apiacées.",E:"On utilise ses fleurs."},a:["A","B","C"],ex:"Ranunculaceae/Graines."},{q:"Lavandula angustifolia (Lavande) :",o:{A:"Lamiaceae.",B:"Sommités fleuries très odorantes.",C:"Propriétés sédatives et antiseptiques.",D:"Racine tubérisée.",E:"Fruit charnu."},a:["A","B","C"],ex:"Classique aromathérapie."},{q:"Salvia officinalis (Sauge) :",o:{A:"Lamiaceae.",B:"Feuilles veloutées gris-vert.",C:"Propriétés oestrogène-like.",D:"Antiseptique.",E:"Toxique à très haute dose (thuyone)."},a:["A","B","C","D","E"],ex:"Sauge = Sauver. Thuyone neurotoxique à forte dose."},{q:"Les Gymnospermes (Genévrier, If) :",o:{A:"Ovules nus (pas d'ovaire).",B:"Produisent des cônes.",C:"L'If a une arille rouge charnue.",D:"Le Genévrier a des galbules (épice/diurétique).",E:"Sont des Angiospermes."},a:["A","B","C","D"],ex:"Gymnospermes = Graines nues."},{q:"Trigonella foenum-graecum (Fenugrec) :",o:{A:"Fabaceae.",B:"Graines anguleuses très odorantes.",C:"Propriété orexigène.",D:"Propriété hypoglycémiante.",E:"Famille des Lamiaceae."},a:["A","B","C","D"],ex:"Fabaceae. Usage diabète/appétit."},{q:"Glycyrrhiza glabra (Réglisse) :",o:{A:"Fabaceae.",B:"Racines/stolons.",C:"Saveur sucrée (Glycyrrhizine).",D:"Hypertensive à forte dose.",E:"On utilise les feuilles."},a:["A","B","C","D"],ex:"Fabaceae/Racines. HTA connu."},{q:"Origanum vulgare et Origanum majorana :",o:{A:"Lamiaceae.",B:"HE phénolées (Carvacrol/Thymol).",C:"Antiseptiques puissants.",D:"On utilise les sommités fleuries.",E:"Algues marines."},a:["A","B","C","D"],ex:"Lamiaceae, HE phénolées."},{q:"Opuntia ficus-indica (Figuier de Barbarie) :",o:{A:"Cactaceae.",B:"Fruit comestible.",C:"Cladodes (raquettes) charnues.",D:"Huile de graines précieuse.",E:"Plante toxique mortelle."},a:["A","B","C","D"],ex:"Pas toxique. Fruit et huile prisés."}];
+// Q1 à Q20
+const SERIES_1 = [
+  {q:"Digestion des glucides : enzymes",o:{A:"L’α‑amylase salivaire coupe les liaisons α(1→4) au sein des chaînes.",B:"La pepsine participe à l’hydrolyse des polysaccharides.",C:"L’α‑amylase pancréatique agit dans l’intestin sur les liaisons α(1→4).",D:"L’α‑dextrinase (enzyme débranchante) hydrolyse surtout les liaisons α(1→6).",E:"L’α‑glucosidase libère du glucose à partir du maltose (liaisons α(1→4))."},a:["A","C","D","E"],ex:"B Faux : La pepsine est une enzyme protéolytique, pas glucidique."},
+  {q:"Absorption intestinale : localisation",o:{A:"Le glucose est surtout absorbé dans le duodénum et le jéjunum.",B:"Seuls les monosaccharides peuvent être absorbés par les entérocytes.",C:"Les oligosaccharides sont toujours absorbés chez l’adulte par endocytose.",D:"Les glucides non digestibles sont éliminés dans les matières fécales.",E:"Le galactose est absorbé sans transporteur."},a:["A","B","D"],ex:"C Faux : Endocytose surtout chez le nouveau-né. E Faux : Le galactose nécessite SGLT/GLUT."},
+  {q:"Transporteurs GLUT/SGLT : généralités",o:{A:"GLUT1 est présent dans les érythrocytes.",B:"GLUT2 est sur la membrane basolatérale et fait sortir le glucose de l’entérocyte.",C:"SGLT1 fonctionne par diffusion facilitée.",D:"GLUT4 est un transporteur du muscle strié nécessitant l’insuline.",E:"GLUT5 est le principal transporteur intestinal du fructose."},a:["A","B","D","E"],ex:"C Faux : SGLT1 est un transport actif (co-transport Na+)."},
+  {q:"Test au D‑xylose",o:{A:"Le D‑xylose nécessite une digestion préalable.",B:"Le D‑xylose est éliminé dans les urines.",C:"Il explore la capacité d’absorption de la muqueuse digestive.",D:"Il sert à dépister une malabsorption (ex. perte de poids).",E:"Il évalue spécifiquement l’activité de l’amylase pancréatique."},a:["B","C","D"],ex:"A Faux : Monosaccharide directement absorbable. E Faux : Il n'évalue pas la digestion (amylase)."},
+  {q:"Glycémie : définitions",o:{A:"La glycémie est le taux de glucose plasmatique.",B:"La glycémie à jeun se mesure 9–12 h après arrêt des repas.",C:"Valeurs normales à jeun : 0,70–1,10 g/L.",D:"La grossesse ne modifie jamais la glycémie.",E:"Hyperglycémie et hypoglycémie sont des variations pathologiques."},a:["A","B","C","E"],ex:"D Faux : La grossesse entraîne des variations physiologiques."},
+  {q:"Glycolyse : caractéristiques",o:{A:"Elle se déroule dans le cytosol de toutes les cellules.",B:"Elle nécessite obligatoirement l’oxygène.",C:"Elle transforme le G6P en pyruvate.",D:"Elle comporte 10 étapes, en 2 phases.",E:"Elle comporte 3 réactions irréversibles."},a:["A","C","D","E"],ex:"B Faux : C'est une voie possible en anaérobiose."},
+  {q:"Glycolyse : étapes irréversibles",o:{A:"Phosphorylation du glucose en G6P (hexokinase/glucokinase).",B:"Isomérisation G6P → F6P.",C:"Phosphorylation F6P → F1,6‑bisP (PFK‑1).",D:"Déshydratation 2‑phosphoglycérate → PEP.",E:"Transfert du phosphate du PEP vers l’ADP (pyruvate kinase)."},a:["A","C","E"],ex:"B est réversible. D (Enolase) est réversible."},
+  {q:"Glycolyse : cofacteurs/points clés",o:{A:"La 1ère réaction nécessite ATP et Mg2+.",B:"La 3ème réaction (PFK‑1) nécessite Mg2+.",C:"La 6ème réaction utilise NAD+ comme coenzyme.",D:"La 9ème réaction ne nécessite aucun ion métallique.",E:"La 10ème réaction nécessite Mg2+ ou Mn2+."},a:["A","B","C","E"],ex:"D Faux : La 9ème réaction nécessite du Mg2+."},
+  {q:"Produits globaux de la glycolyse",o:{A:"2 ATP (bilan net).",B:"2 NADH,H+.",C:"2 H2O.",D:"2 CO2.",E:"2 pyruvates."},a:["A","B","C","E"],ex:"D Faux : Pas de décarboxylation (pas de CO2) dans la glycolyse anaérobie."},
+  {q:"Régulation : hexokinase vs glucokinase",o:{A:"L’hexokinase est inhibée par le glucose‑6‑phosphate.",B:"La glucokinase a une régulation allostérique majeure.",C:"La glucokinase est active quand la concentration en glucose est élevée.",D:"L’hexokinase favorise le métabolisme basal du glucose.",E:"La glucokinase a une forte affinité (Km très faible) pour le glucose."},a:["A","C","D"],ex:"B Faux. E Faux : Glucokinase a une faible affinité (Km élevé)."},
+  {q:"Régulation de la glycolyse : PFK‑1 et pyruvate kinase",o:{A:"PFK‑1 est activée par l’AMP.",B:"PFK‑1 est activée par le fructose‑2,6‑bisphosphate.",C:"PFK‑1 est inhibée par l’ATP et le citrate.",D:"L’acétyl‑CoA inhibe la pyruvate kinase.",E:"Les acides gras à longue chaîne inhibent la pyruvate kinase."},a:["A","B","C","E"],ex:"D Faux : Dans le cours, l'Acétyl-CoA active la PK (rétrocontrôle positif) ou est inhibiteur selon le contexte, mais ici E est clairement Vrai."},
+  {q:"Régulation hormonale (glycolyse)",o:{A:"L’insuline active PFK‑1.",B:"Le glucagon a un effet opposé à l’insuline sur la glycolyse.",C:"L’insuline active l’hexokinase/glucokinase.",D:"Le glucagon active la glycolyse dans le foie (tel quel).",E:"L’insuline active la pyruvate kinase."},a:["A","B","C","E"],ex:"D Faux : Le glucagon inhibe la glycolyse hépatique (favorise la néoglucogenèse)."},
+  {q:"Déficit en pyruvate kinase (GR)",o:{A:"Les GR dépendent exclusivement de la glycolyse pour l’ATP.",B:"Le déficit entraîne une anémie hémolytique.",C:"La membrane des GR devient plus fragile, entraînant phagocytose.",D:"Le traitement cité est le mitapivat.",E:"Le déficit augmente fortement la phosphorylation oxydative des GR."},a:["A","B","C","D"],ex:"E Faux : Les GR n'ont pas de mitochondries, donc pas de phosphorylation oxydative."},
+  {q:"Déficit en PFK musculaire (Tarui)",o:{A:"Accumulation de F6P et G6P.",B:"Accumulation d’un glycogène de structure anormale dans le muscle.",C:"Après effort : crampes et fatigabilité musculaire.",D:"Après effort : élévation marquée de l’acide lactique dans le sang.",E:"Pathologie appelée maladie de Tarui."},a:["A","B","C","E"],ex:"D Faux : Pas d'élévation marquée de lactate (blocage de la glycolyse)."},
+  {q:"Fermentation lactique",o:{A:"Elle a lieu si la cellule est en hypoxie/anaérobiose.",B:"Pyruvate + NADH,H+ → lactate + NAD+.",C:"L’enzyme est la lactate déshydrogénase.",D:"Elle régénère le NAD+ permettant la poursuite de la glycolyse.",E:"Elle ne peut pas se produire dans les globules rouges."},a:["A","B","C","D"],ex:"E Faux : Elle est essentielle dans les GR (pas de mitochondries)."},
+  {q:"Fermentation alcoolique",o:{A:"Elle se produit principalement chez les levures.",B:"Étape 1 : pyruvate → acétaldéhyde + CO2 (pyruvate décarboxylase).",C:"Étape 2 : acétaldéhyde + NADH,H+ → éthanol + NAD+ (alcool DH).",D:"C’est la voie principale des hépatocytes humains.",E:"Elle permet aussi de régénérer le NAD+."},a:["A","B","C","E"],ex:"D Faux : C'est une voie microbienne/végétale, pas humaine."},
+  {q:"Pyruvate : oxaloacétate",o:{A:"Pyruvate + CO2 + ATP → oxaloacétate + ADP + Pi.",B:"Enzyme : pyruvate carboxylase.",C:"Cette réaction peut servir à la néoglucogenèse.",D:"Cette réaction ne consomme jamais d’ATP.",E:"Elle a lieu exclusivement dans le cytosol."},a:["A","B","C"],ex:"D Faux : Elle consomme 1 ATP. E Faux : Exclusivement mitochondriale."},
+  {q:"Cycle de Krebs : généralités",o:{A:"Se déroule en aérobiose dans la matrice mitochondriale.",B:"Comprend 8 réactions.",C:"Produit 2 CO2 par tour (par acétyl‑CoA).",D:"Produit 3 NADH,H+ et 1 FADH2 par tour.",E:"Ne régénère pas l’oxaloacétate."},a:["A","B","C","D"],ex:"E Faux : L'oxaloacétate est régénéré en fin de cycle."},
+  {q:"Cycle de Krebs : enzymes clés de régulation",o:{A:"Citrate synthase.",B:"Isocitrate déshydrogénase.",C:"α‑cétoglutarate déshydrogénase.",D:"Fumarase.",E:"Malate déshydrogénase."},a:["A","B","C"],ex:"D et E ne sont pas des enzymes clés limitantes/régulatrices majeures."},
+  {q:"Régulation : citrate synthase",o:{A:"Dépend de la disponibilité en oxaloacétate et acétyl‑CoA.",B:"Inhibée par succinyl‑CoA (compétition avec acétyl‑CoA).",C:"Inhibée par ATP et citrate (produits).",D:"Activée par NADH.",E:"Insensible à la disponibilité en substrat."},a:["A","B","C"],ex:"D Faux (NADH inhibe). E Faux."}
+];
 
-const SERIES_2=[{q:"Nomenclature binomiale (Linné) :",o:{A:"Elle se compose de « Genre + espèce ».",B:"Elle utilise uniquement des noms vernaculaires.",C:"Elle réduit le problème « un même nom pour plusieurs espèces ».",D:"Le nom du 1er descripteur peut être ajouté.",E:"On va toujours du particulier vers le général."},a:["A","C","D"],ex:"A=V ; B=F (vernaculaire != binomiale) ; C=V ; D=V ; E=F (général vers particulier)."},{q:"Rangs taxonomiques (terminaisons) :",o:{A:"« Famille » se termine par -aceae.",B:"« Ordre » se termine par -ales.",C:"« Classe » se termine par -ales.",D:"Certaines familles gardent des noms historiques.",E:"« Genre » se termine par -aceae."},a:["A","B","D"],ex:"C=F (-ales = ordre) ; E=F (-aceae = famille)."},{q:"Angiospermes (caractères) :",o:{A:"Monocotylédones : 1 cotylédon.",B:"Eudicotylédones : pollen triaperturé.",C:"Monocotylédones : nervation parallèle.",D:"Paléodicotylédones : fleurs toujours pentamères.",E:"Eudicotylédones : racines pivotantes."},a:["A","B","C","E"],ex:"D=F (pentamère = eudicots)."},{q:"Ergot de seigle (Claviceps purpurea) :",o:{A:"C'est un Ascomycète.",B:"Forme de résistance = sclérote.",C:"La drogue = sclérote.",D:"Alcaloïdes « quinoliques » type quinine.",E:"Ergométrine/ergotamine liées aux hémorragies utérines et migraine."},a:["A","B","C","E"],ex:"D=F (alcaloïdes indoliques)."},{q:"LSD :",o:{A:"Dérivé semi-synthétique.",B:"Dithylamide de l'acide lysergique.",C:"Médicament ocytocique en routine.",D:"Hallucinogène.",E:"Peut provoquer mydriase/tremblements/vomissements."},a:["A","B","D","E"],ex:"C=F."},{q:"Prêle des champs (Equisetum arvense) :",o:{A:"Drogue : parties aériennes.",B:"Contient silice.",C:"Activité diurétique.",D:"Indiquée dans l'ostéoporose/consolidation.",E:"Principes actifs = hétérosides cardiotoniques."},a:["A","B","C","D"],ex:"E=F (flavonoïdes/tanins/silice/saponosides)."},{q:"Ginkgo biloba :",o:{A:"Arbre dioïque.",B:"Feuilles à nervation dichotomique.",C:"Drogue : racines.",D:"Contient ginkgolides et biflavonoïdes.",E:"Améliore l'irrigation tissulaire."},a:["A","B","D","E"],ex:"C=F (drogue: feuilles)."},{q:"If (Taxus) :",o:{A:"T. brevifolia : drogue = écorce de tronc.",B:"T. baccata : drogue = feuilles.",C:"Toutes parties toxiques sauf l'arille.",D:"Paclitaxel = diterpène anticancéreux.",E:"L'if est une plante herbacée annuelle."},a:["A","B","C","D"],ex:"E=F (arbre/arbuste)."},{q:"Docétaxel / Taxotère :",o:{A:"Plus actif que Taxol dans l'if d'Europe.",B:"Classé comme alcaloïde indolique.",C:"Lié à Taxus baccata.",D:"Dérivé hétérosidique anthracénique.",E:"Diterpène anticancéreux."},a:["A","C","E"],ex:"B=F (diterpène) ; D=F."},{q:"Colchique officinal :",o:{A:"Plante vivace par bulbe tuniqué.",B:"Drogue : graines et bulbes.",C:"Contient colchicine (noyau tropolone).",D:"Indiqué dans la goutte aiguë.",E:"Totalement non toxique."},a:["A","B","C","D"],ex:"E=F (toxicité décrite)."},{q:"Thiocolchicoside :",o:{A:"Myorelaxant.",B:"Dérivé lié au colchicoside.",C:"Antimitotique de première intention.",D:"Appoint des contractures musculaires.",E:"Sans effets indésirables digestifs."},a:["A","B","D"],ex:"C=F ; E=F (diarrhées possibles)."},{q:"Podophylle (Podophyllum peltatum) :",o:{A:"Drogue : rhizome.",B:"Podophylline riche en lignanes.",C:"Podophyllotoxine en topique contre condylomes.",D:"Etoposide par hémisynthèse.",E:"Etoposide inhibiteur de la topoisomérase II."},a:["A","B","C","D","E"],ex:"Toutes vraies."},{q:"Pavot somnifère :",o:{A:"Fruit = capsule.",B:"Opium = latex séché des capsules.",C:"Graines = huile fixe sans alcaloïdes.",D:"Morphine = alcaloïde principal (~10-12%).",E:"Papavérine = antispasmodique."},a:["A","B","C","D","E"],ex:"Toutes vraies."},{q:"Morphine (propriétés) :",o:{A:"Antalgique palier III.",B:"Provoque myosis.",C:"Antidiarrhéique.",D:"Stimulant respiratoire puissant.",E:"Peut induire sédation/euphorie."},a:["A","B","C","E"],ex:"D=F (dépression respiratoire)."},{q:"Codéine :",o:{A:"Antitussif.",B:"Plus antalgique que la morphine.",C:"Analgésique moins fort que morphine.",D:"Administration orale/rectale possible.",E:"N'existe que sous forme injectable."},a:["A","C","D"],ex:"B=F ; E=F."},{q:"Peyotl :",o:{A:"Famille Cactaceae.",B:"Drogue : tige.",C:"Contient mescaline.",D:"Anesthésique local type cocaïne.",E:"Hallucinogène."},a:["A","B","C","E"],ex:"D=F."},{q:"Eucalyptus globulus :",o:{A:"Drogue : feuilles séchées.",B:"HE riche en 1,8-cinéole (eucalyptol).",C:"Antiseptique/mucolytique.",D:"Famille Myrtaceae.",E:"Alcaloïdes indoliques majoritaires."},a:["A","B","C","D"],ex:"E=F."},{q:"Giroflier (Eugenia caryophyllata) :",o:{A:"Famille Myrtaceae.",B:"Drogue : boutons floraux (clous).",C:"HE : eugénol.",D:"Analgésique/anti-inflammatoire.",E:"Drogue = rhizome."},a:["A","B","C","D"],ex:"E=F."},{q:"Passiflore (Passiflora incarnata) :",o:{A:"Drogue : parties aériennes sèches.",B:"Alcaloïdes indoliques + flavonoïdes.",C:"Sédative/anxiolytique.",D:"Antispasmodique.",E:"Drogue = bulbe."},a:["A","B","C","D"],ex:"E=F."},{q:"Cocaïer (Erythroxylon coca) :",o:{A:"Drogue : feuilles.",B:"Cocaïne = anesthésique local puissant.",C:"Action sympathomimétique indirecte.",D:"Utilisation thérapeutique directe recommandée.",E:"Risque de dépendance (stupéfiant)."},a:["A","B","C","E"],ex:"D=F."},{q:"Salicosides (saule/peuplier) :",o:{A:"Présents chez Salix alba.",B:"Présents chez Populus nigra.",C:"Donnent acide salicylique par hydrolyse.",D:"Sont des hétérosides cardiotoniques.",E:"Rattachés aux Salicaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Séné (Cassia angustifolia) :",o:{A:"Famille Fabaceae.",B:"Drogue : folioles et gousses.",C:"Sennosides (dérivés anthracéniques).",D:"Laxatif/purgatif.",E:"Drogue = stigmates."},a:["A","B","C","D"],ex:"E=F."},{q:"Réglisse (Glycyrrhiza glabra) :",o:{A:"Drogue : racines/rhizomes/stolons.",B:"Glycyrrhizine = saponoside triterpénique.",C:"Anti-inflammatoire/antiulcéreux.",D:"Antispasmodique et édulcorant.",E:"Famille : Myrtaceae."},a:["A","B","C","D"],ex:"E=F (Fabaceae)."},{q:"Sophora japonica :",o:{A:"Drogue : boutons floraux.",B:"Rutoside (flavonoïde).",C:"Propriété « vitaminique P ».",D:"Drogue : feuilles uniquement.",E:"Famille Fabaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Bourdaine et Cascara :",o:{A:"Bourdaine : frangulosides.",B:"Cascara : cascarosides.",C:"Drogue : écorce desséchée.",D:"Cascara plus irritante que bourdaine.",E:"Propriété principale : cardiotonique."},a:["A","B","C","D"],ex:"E=F (laxatif/purgatif)."},{q:"Cannabis :",o:{A:"Plante dioïque annuelle.",B:"Fruit = chènevis (akène).",C:"Sativa = chanvre fibres.",D:"Indica = chanvre résine.",E:"THC = principal psychoactif."},a:["A","B","C","D","E"],ex:"Toutes vraies."},{q:"Cannabis (préparations) :",o:{A:"Herbe = sommités fleuries + feuilles séchées.",B:"Résine (haschich) par battage/compression.",C:"Huile : 30-60% THC.",D:"CBD = responsable de l'effet psychotrope.",E:"Dépendance psychologique importante."},a:["A","B","C","E"],ex:"D=F (psychoactif = THC)."},{q:"CBD :",o:{A:"Anti-inflammatoire.",B:"Anxiolytique.",C:"Antipsychotique.",D:"Hallucinogène majeur.",E:"Antispasmodique/antalgique."},a:["A","B","C","E"],ex:"D=F."},{q:"Ortie dioïque (Urtica dioica) :",o:{A:"Drogue : partie aérienne et racine.",B:"Anti-inflammatoire/reminéralisante.",C:"Racine : hypertrophie bénigne de la prostate.",D:"Famille Urticaceae.",E:"Drogue = bulbe."},a:["A","B","C","D"],ex:"E=F."},{q:"Chêne-galle (Quercus lusitanica) :",o:{A:"Drogue : galle (noix de galle).",B:"Liée à piqûre de Cynips.",C:"Riche en tanins galliques.",D:"Astringent/hémostatique.",E:"Famille Zingiberaceae."},a:["A","B","C","D"],ex:"E=F (Fagaceae)."},{q:"Guimauve (Althaea officinalis) :",o:{A:"Drogue : racine.",B:"Contient mucilages.",C:"Antitussif/émollient.",D:"Alcaloïdes tropaniques.",E:"Famille Malvaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Mauve (Malva sylvestris) :",o:{A:"Drogue : fleurs et feuilles.",B:"Contient mucilages.",C:"Béchique/émolliente.",D:"Drogue : stigmates.",E:"Famille Malvaceae."},a:["A","B","C","E"],ex:"D=F."},{q:"Citronnier (Citrus limonum) :",o:{A:"Drogue : feuilles et fruit.",B:"Hespéridoside et diosmine.",C:"Antiseptique/diurétique, vitaminiques P.",D:"Famille Rutaceae.",E:"Alcaloïde principal : aconitine."},a:["A","B","C","D"],ex:"E=F."},{q:"Marronnier d'Inde :",o:{A:"Drogue : graines + écorce.",B:"Graines : aescine (saponosides).",C:"Ecorce : tanins + coumariniques.",D:"Anti-oedémateuse/anti-inflammatoire.",E:"Famille Papaveraceae."},a:["A","B","C","D"],ex:"E=F."},{q:"Camptotheca acuminata :",o:{A:"Drogue : écorce.",B:"Camptothécine (alcaloïde quinolique).",C:"Abandonnée pour toxicité (1970).",D:"Dérivés : irinotécan/topotécan.",E:"Utilisée comme laxatif anthracénique."},a:["A","B","C","D"],ex:"E=F."},{q:"Gentiane (Gentiana lutea) :",o:{A:"Drogue : racine.",B:"Gentiopicroside = hétéroside amer.",C:"Tonique/stomachique/apéritif.",D:"Famille Gentianaceae.",E:"Drogue : boutons floraux."},a:["A","B","C","D"],ex:"E=F."},{q:"Pervenche de Madagascar :",o:{A:"Famille Apocynaceae.",B:"Drogue : parties aériennes.",C:"Alcaloïdes binaires (catharantine + vindoline).",D:"Vinblastine/Vincristine antimitotiques.",E:"C'est un conifère."},a:["A","B","C","D"],ex:"E=F."},{q:"Rauwolfia :",o:{A:"Réserpine : antihypertenseur.",B:"Ajmalicine : vasodilatateur périphérique.",C:"Yohimbine : hypotension/impotence.",D:"Drogue = stigmates.",E:"Famille = Solanaceae."},a:["A","B","C"],ex:"D=F ; E=F."},{q:"Digitale (Digitalis) :",o:{A:"Drogue : feuilles.",B:"Hétérosides cardiotoniques (cardénolides).",C:"Digitaline = D. purpurea.",D:"Digoxine = D. lanata.",E:"Propriété : laxatif irritant."},a:["A","B","C","D"],ex:"E=F."},{q:"Solanacées à tropanes :",o:{A:"Belladone : atropine/hyoscyamine/scopolamine.",B:"Datura : atropine/hyoscyamine/scopolamine.",C:"Jusquiame noire : tropanes aussi.",D:"Tabac : nicotine.",E:"Tabac : cardénolide cardiotonique."},a:["A","B","C","D"],ex:"E=F."},{q:"Absinthe (Artemisia absinthium) :",o:{A:"Famille Asteraceae.",B:"Drogue : feuilles et sommités fleuries.",C:"HE riche en alpha-thuyones.",D:"Epileptogène à forte dose.",E:"Drogue : bulbe."},a:["A","B","C","D"],ex:"E=F."},{q:"Artichaut (Cynara scolymus) :",o:{A:"Famille Asteraceae.",B:"Drogue : feuilles.",C:"Contient cynarine et flavonoïdes.",D:"Cholérétique/diurétique.",E:"Principal alcaloïde : morphine."},a:["A","B","C","D"],ex:"E=F."},{q:"TP - Safran (Crocus sativus) :",o:{A:"Famille Iridaceae.",B:"Partie utilisée : stigmates du pistil.",C:"Partie utilisée : feuilles.",D:"Partie utilisée : bulbe.",E:"Correspond à l'entrée TP."},a:["A","B","E"],ex:"C=F ; D=F."},{q:"TP - Clou de girofle :",o:{A:"Eugenia caryophylata.",B:"Famille Myrtaceae.",C:"Partie utilisée : boutons floraux.",D:"Partie utilisée : rhizome.",E:"Fait partie du TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Réglisse :",o:{A:"Glycyrrhiza glabra.",B:"Famille Fabaceae.",C:"Partie utilisée : racines.",D:"Famille Apiaceae.",E:"TP1 la mentionne."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Datura :",o:{A:"Datura stramonium.",B:"Famille Solanaceae.",C:"Partie utilisée : feuilles et graines.",D:"Partie utilisée : stigmates.",E:"Présent dans TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Ricin :",o:{A:"Ricinus communis.",B:"Famille Euphorbiaceae.",C:"Partie utilisée : graines (huile).",D:"Famille Lamiaceae.",E:"Présent en TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Arganier :",o:{A:"Argania spinosa.",B:"Famille Sapotaceae.",C:"Amandes des fruits (graines).",D:"Partie utilisée : capitules floraux.",E:"Présent dans TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Badiane :",o:{A:"Illicium verum.",B:"Partie utilisée : fruits étoilés.",C:"Famille Schisandraceae.",D:"Partie utilisée : racines.",E:"Présente dans TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Pavot :",o:{A:"Papaver somniferum.",B:"Famille Papaveraceae.",C:"Partie utilisée : latex du fruit.",D:"Partie utilisée : feuilles seulement.",E:"Présent en TP1."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Menthe poivrée :",o:{A:"Mentha piperita.",B:"Famille Lamiaceae.",C:"Partie utilisée : feuilles.",D:"Famille Apiaceae.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Lavande :",o:{A:"Lavandula angustifolia.",B:"Famille Lamiaceae.",C:"Partie utilisée : sommités fleuries.",D:"Partie utilisée : racines.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Camomille allemande :",o:{A:"Matricaria chamomilla.",B:"Famille Asteraceae.",C:"Partie utilisée : capitules floraux.",D:"Famille Verbenaceae.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Verveine citronnée :",o:{A:"Aloysia citrodora.",B:"Famille Verbenaceae.",C:"Partie utilisée : feuilles.",D:"Famille Lamiaceae.",E:"Présente en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Aloe vera :",o:{A:"Aloe vera.",B:"Famille Asphodelaceae.",C:"Partie utilisée : gel + latex.",D:"Partie utilisée : stigmates.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Laurier rose :",o:{A:"Nerium oleander.",B:"Famille Apocynaceae.",C:"Partie utilisée : feuilles (très toxiques).",D:"Famille Asteraceae.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Gingembre :",o:{A:"Zingiber officinale.",B:"Famille Zingiberaceae.",C:"Partie utilisée : rhizome.",D:"Partie utilisée : boutons floraux.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Curcuma :",o:{A:"Curcuma longa.",B:"Famille Zingiberaceae.",C:"Partie utilisée : rhizome.",D:"Famille Myrtaceae.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Ail :",o:{A:"Allium sativum.",B:"Famille Amaryllidaceae.",C:"Partie utilisée : bulbe.",D:"Partie utilisée : racines.",E:"Présent en TP2."},a:["A","B","C","E"],ex:"D=F."},{q:"TP - Oignon :",o:{A:"Allium cepa.",B:"Famille Amaryllidaceae.",C:"Partie utilisée : bulbe.",D:"Famille Apiaceae.",E:"Présent dans TP2."},a:["A","B","C","E"],ex:"D=F."}];
+// Q21 à Q40
+const SERIES_2 = [
+  {q:"Chaîne respiratoire : complexes et pompage",o:{A:"Le complexe I pompe 4 H+ vers l’espace intermembranaire.",B:"Le complexe II pompe des protons.",C:"Le complexe III pompe 4 H+.",D:"Le complexe IV pompe 2 H+.",E:"Le complexe V synthétise l’ATP grâce au gradient de protons."},a:["A","C","D","E"],ex:"B Faux : Le complexe II ne pompe pas de protons."},
+  {q:"Inhibiteurs : chaîne respiratoire",o:{A:"Roténone inhibe le complexe I.",B:"Malonate inhibe le complexe II.",C:"Antimycine A inhibe le complexe III.",D:"Cyanure inhibe le complexe IV.",E:"Le CO inhibe le complexe III."},a:["A","B","C","D"],ex:"E Faux : Le CO inhibe le complexe IV."},
+  {q:"Production d’ATP : flux de protons",o:{A:"1 NADH,H+ correspond à 10 H+ (I, III, IV).",B:"1 FADH2 correspond à 6 H+ (III, IV).",C:"2 H+ suffisent pour produire 1 ATP.",D:"4 H+ sont nécessaires pour produire 1 ATP.",E:"La chaîne respiratoire aboutit à H2O et ATP."},a:["A","B","D","E"],ex:"C Faux : Il faut 4 H+."},
+  {q:"Navettes mitochondriales",o:{A:"La navette malate‑aspartate donne 1 NADH mitochondrial par NADH cytosolique.",B:"La navette glycérol‑phosphate convertit un NADH cytosolique en FADH2 mitochondrial.",C:"La navette malate‑aspartate est citée pour foie/cœur/reins/cerveau.",D:"La navette glycérol‑phosphate est citée pour muscle squelettique/cerveau.",E:"Ces navettes existent car la membrane interne est perméable au NADH."},a:["A","B","C","D"],ex:"E Faux : La membrane est IMPERMÉABLE au NADH, d'où la nécessité des navettes."},
+  {q:"Voie des pentoses phosphates (PPP) : rôles",o:{A:"Produit du NADPH pour biosynthèses réductrices.",B:"Produit du ribose‑5‑phosphate pour nucléotides/acides nucléiques.",C:"Produit directement de l’ATP.",D:"Participe à la protection contre le stress oxydatif (GR, glutathion).",E:"Est une voie cytoplasmique anabolique."},a:["A","B","D","E"],ex:"C Faux : La PPP ne produit pas d'énergie (ATP)."},
+  {q:"PPP : tissus actifs",o:{A:"Foie.",B:"Adipocytes.",C:"Glandes mammaires.",D:"Glandes surrénales.",E:"Uniquement dans les mitochondries."},a:["A","B","C","D"],ex:"E Faux : C'est une voie cytoplasmique."},
+  {q:"PPP : régulation (G6PD)",o:{A:"La G6PD est l’enzyme clé régulatrice.",B:"Elle est activée par accumulation de NADP+.",C:"Elle est inhibée par accumulation de NADPH.",D:"Toute la voie (oxydative + non oxydative) est régulée au même niveau.",E:"Demande élevée en NADPH → catabolisme du G6P via PPP."},a:["A","B","C","E"],ex:"D Faux : Seule la partie oxydative est strictement régulée."},
+  {q:"Déficit en G6PD : conséquences",o:{A:"↓ NADPH.",B:"↓ glutathion réduit (GSH).",C:"↑ stress oxydatif et fragilité du globule rouge.",D:"Hémolyse → anémie hémolytique.",E:"Protection contre H2O2 améliorée."},a:["A","B","C","D"],ex:"E Faux : La protection antioxydante est diminuée."},
+  {q:"Néoglucogenèse : généralités",o:{A:"Synthèse de glucose à partir de composés non glucidiques.",B:"Se déroule principalement dans le foie (≈90%).",C:"Se déroule aussi dans le rein (≈10%).",D:"Est simplement l’inverse exact de la glycolyse.",E:"Comprend 12 réactions dont 5 spécifiques irréversibles."},a:["A","B","C","E"],ex:"D Faux : Ce n'est pas l'inverse exact (contournement des étapes irréversibles)."},
+  {q:"Précurseurs de la néoglucogenèse",o:{A:"Lactate.",B:"Alanine.",C:"Glycérol.",D:"Acides aminés glucoformateurs.",E:"Leucine (comme AA glucoformateur)."},a:["A","B","C","D"],ex:"E Faux : La leucine (et lysine) sont cétogènes, pas glucoformateurs."},
+  {q:"Néoglucogenèse : enzymes spécifiques",o:{A:"Pyruvate carboxylase (mitochondriale).",B:"PEP carboxykinase (oxaloacétate → PEP).",C:"Fructose‑1,6‑bisphosphatase.",D:"Glucose‑6‑phosphatase (hépatique surtout, aussi rénale).",E:"Aldolase (comme enzyme spécifique irréversible)."},a:["A","B","C","D"],ex:"E Faux : L'aldolase est réversible et commune à la glycolyse."},
+  {q:"Néoglucogenèse : coût énergétique",o:{A:"1 glucose à partir de 2 pyruvates consomme 6 ATP.",B:"Elle consomme 2 NADH,H+ (équivalant à 5 ATP).",C:"Total annoncé : 11 ATP équivalents par glucose synthétisé.",D:"Elle produit un gain net d’ATP.",E:"Le coût énergétique est identique à celui de la glycolyse."},a:["A","B","C"],ex:"D Faux (consomme). E Faux (Glycolyse produit, Néo consomme)."},
+  {q:"Régulation : glycolyse vs néoglucogenèse (F2,6BP)",o:{A:"F2,6BP active PFK‑1.",B:"F2,6BP inhibe la fructose‑1,6‑bisphosphatase.",C:"Glucagon ↓ F2,6BP → stimule néoglucogenèse.",D:"Insuline ↑ F2,6BP → stimule glycolyse.",E:"F2,6BP stimule simultanément glycolyse et néoglucogenèse."},a:["A","B","C","D"],ex:"E Faux : Effets opposés (régulation réciproque)."},
+  {q:"Déficits : Von Gierke",o:{A:"Déficit en glucose‑6‑phosphatase.",B:"Incapacité de convertir G6P en glucose libre.",C:"Hypoglycémie sévère surtout après jeûne.",D:"Hépatomégalie (accumulation de glycogène).",E:"Alcalose lactique."},a:["A","B","C","D"],ex:"E Faux : C'est une Acidose lactique."},
+  {q:"Métabolisme du fructose : transport/absorption",o:{A:"Transport facilité via GLUT2 et GLUT5.",B:"GLUT5 est le principal transporteur intestinal du fructose.",C:"Le fructose déclenche la sécrétion d’insuline comme le glucose.",D:"Son absorption intestinale est décrite comme active (Na+ et ATP).",E:"Il ne peut pas être métabolisé en tissus extra‑hépatiques."},a:["A","B","D"],ex:"C Faux (ne déclenche pas insuline). E Faux (Possible via hexokinase)."},
+  {q:"Métabolisme du fructose : foie vs tissus",o:{A:"Au foie, la fructokinase forme du fructose‑1‑phosphate.",B:"Le fructose est massivement stocké en glycogène hépatique.",C:"En tissus extra‑hépatiques, l’hexokinase peut former du fructose‑6‑P.",D:"Le fructose peut alimenter la glycolyse via fructose‑6‑P.",E:"La fructokinase est citée comme enzyme majoritaire hépatique."},a:["A","C","D","E"],ex:"B Faux : Il est rapidement utilisé (lipogenèse, énergie), peu stocké."},
+  {q:"Anomalies du fructose",o:{A:"Intolérance héréditaire : déficit en aldolase B.",B:"Intolérance héréditaire : accumulation toxique de fructose‑1‑P.",C:"Signes : vomissements, hypoglycémie, hépatomégalie, retard de croissance.",D:"Fructosurie : déficit en fructokinase, souvent asymptomatique.",E:"Fructosurie : déficit en lactase."},a:["A","B","C","D"],ex:"E Faux : Lactase concerne le lactose."},
+  {q:"Galactose : digestion/transport",o:{A:"Le lactose est hydrolysé par β‑galactosidase intestinale.",B:"Entrée dans l’entérocyte via SGLT1 (Na+/sucre).",C:"Sortie basolatérale via GLUT2.",D:"GLUT1 permet l’entrée dans toutes les cellules.",E:"Le galactose n’a aucun rôle biologique structural."},a:["A","B","C","D"],ex:"E Faux : Précurseur important (glycolipides, glycoprotéines)."},
+  {q:"Galactosémies : types",o:{A:"Type I (congénitale sévère) : déficit en galactose‑1‑P uridyltransférase.",B:"Type II : déficit en galactokinase, cataractes précoces (galactitol).",C:"Type III : déficit en épimérase UDP‑galactose.",D:"Le traitement de la galactosémie sévère est suppression du galactose à vie.",E:"Type I : maladie toujours asymptomatique."},a:["A","B","C","D"],ex:"E Faux : Forme très sévère."},
+  {q:"Glycogène : structure + métabolisme",o:{A:"Polymère de D‑glucose avec liaisons α(1→4) et branches α(1→6).",B:"Les branches apparaissent tous les 8 à 12 résidus de glucose.",C:"Foie : réserve pour l’organisme entier (≈1 jour, stock vite épuisable ~24 h).",D:"Muscle : réserve pour les propres besoins énergétiques du muscle.",E:"Il n’existe qu’une seule voie liée au glycogène (uniquement la synthèse)."},a:["A","B","C","D"],ex:"E Faux : Il y a synthèse (glycogénogenèse) et dégradation (glycogénolyse)."}
+];
 
-const SERIES_3=[{q:"Quel est le nom scientifique du fenugrec ?",o:{A:"Foeniculum vulgare",B:"Trigonella foenum-graecum",C:"Pimpinella anisum",D:"Coriandrum sativum",E:"Linum usitatissimum"},a:["B"],ex:"Le fenugrec correspond à Trigonella foenum-graecum."},{q:"Le cumin velu appartient à la famille :",o:{A:"Fabaceae",B:"Apiaceae",C:"Lamiaceae",D:"Lauraceae",E:"Rubiaceae"},a:["B"],ex:"Cuminum cyminum est en Apiaceae dans le TP."},{q:"La partie utilisée de la cannelle (Cinnamomum zeylanicum) est :",o:{A:"Feuilles",B:"Racines",C:"Écorce",D:"Bulbe",E:"Stigmates"},a:["C"],ex:"La cannelle = écorce."},{q:"Quelle plante du TP1 utilise des « cônes (baies) » ?",o:{A:"Olivier",B:"Genévrier",C:"Badiane",D:"Garance",E:"Ricin"},a:["B"],ex:"Juniperus communis → cônes (baies)."},{q:"La garance (Rubia tinctorum) appartient à la famille :",o:{A:"Rutaceae",B:"Rosaceae",C:"Rubiaceae",D:"Myrtaceae",E:"Caryophyllaceae"},a:["C"],ex:"Garance = Rubiaceae."},{q:"Quelle est la partie utilisée du romarin (TP1) ?",o:{A:"Graines",B:"Feuilles et sommités fleuries",C:"Bulbe",D:"Stigmates",E:"Pétales"},a:["B"],ex:"Rosmarinus officinalis → feuilles + sommités fleuries (TP1)."},{q:"Le pavot (Papaver somniferum) – partie utilisée (TP) :",o:{A:"Graines uniquement",B:"Latex du fruit (opium)",C:"Racines",D:"Bulbe",E:"Écorce"},a:["B"],ex:"TP indique « latex du fruit (opium) »."},{q:"Quelle plante appartient aux Euphorbiaceae ?",o:{A:"Ricin (Ricinus communis)",B:"Réglisse (Glycyrrhiza glabra)",C:"Camomille (Matricaria chamomilla)",D:"Thym (Thymus vulgaris)",E:"Laurier noble (Laurus nobilis)"},a:["A"],ex:"Ricin = Euphorbiaceae."},{q:"La scille (Urginea maritima) – partie utilisée :",o:{A:"Feuilles",B:"Sommités fleuries",C:"Bulbe",D:"Racines",E:"Graines"},a:["C"],ex:"Scille → bulbe."},{q:"Quelles plantes (TP1) ont la partie utilisée = « graines » ? (plusieurs réponses possibles)",o:{A:"Lin (Linum usitatissimum)",B:"Carvi (Carum carvi)",C:"Fenouil doux (Foeniculum vulgare)",D:"Safran (Crocus sativus)",E:"Datura (Datura stramonium)"},a:["A","B","C"],ex:"Lin/carvi/fenouil doux → graines ; safran → stigmates ; datura → feuilles + graines."},{q:"Quel est le nom scientifique du persil (TP2) ?",o:{A:"Apium graveolens",B:"Petroselinum crispum",C:"Coriandrum sativum",D:"Melissa officinalis",E:"Myrtus communis"},a:["B"],ex:"Persil = Petroselinum crispum."},{q:"Le céleri (TP2) appartient à la famille :",o:{A:"Apiaceae",B:"Asteraceae",C:"Poaceae",D:"Malvaceae",E:"Geraniaceae"},a:["A"],ex:"Céleri = Apiaceae."},{q:"Quelle plante (TP2) appartient aux Poaceae ?",o:{A:"Mélisse",B:"Citronnelle",C:"Origan",D:"Ciboulette",E:"Sauge"},a:["B"],ex:"Citronnelle (Cymbopogon citratus) = Poaceae."},{q:"La verveine citronnée – partie utilisée :",o:{A:"Parties aériennes",B:"Feuilles",C:"Racines",D:"Bulbe",E:"Fruits"},a:["B"],ex:"Aloysia citrodora → feuilles."},{q:"Quelle plante fournit « gel interne + latex » ?",o:{A:"Aloe vera",B:"Figuier de Barbarie",C:"Mauve",D:"Rose de Damas",E:"Laurier noble"},a:["A"],ex:"Aloe vera → gel interne + latex."},{q:"Quelle plante est indiquée « feuilles (très toxiques) » dans le TP2 ?",o:{A:"Laurier noble",B:"Laurier rose",C:"Myrte",D:"Absinthe",E:"Armoise blanche"},a:["B"],ex:"Nerium oleander (laurier rose) → feuilles très toxiques."},{q:"L'absinthe – famille (TP2) :",o:{A:"Asteraceae",B:"Lamiaceae",C:"Rutaceae",D:"Cactaceae",E:"Amaryllidaceae"},a:["A"],ex:"Artemisia absinthium = Asteraceae."},{q:"La mauve (Malva sylvestris) – partie utilisée :",o:{A:"Feuilles uniquement",B:"Fleurs et feuilles",C:"Racines uniquement",D:"Bulbe",E:"Stigmates"},a:["B"],ex:"Mauve → fleurs + feuilles."},{q:"Quel est le nom scientifique de la ciboulette (TP2) ?",o:{A:"Allium sativum",B:"Allium cepa",C:"Allium schoenoprasum",D:"Laurus nobilis",E:"Ruta graveolens"},a:["C"],ex:"Ciboulette = Allium schoenoprasum."},{q:"Quelles plantes appartiennent aux Lamiaceae (TP2) ? (plusieurs réponses possibles)",o:{A:"Thym (Thymus vulgaris)",B:"Basilic (Ocimum basilicum)",C:"Citronnelle (Cymbopogon citratus)",D:"Menthe verte (Mentha spicata)",E:"Rue (Ruta graveolens)"},a:["A","B","D"],ex:"Thym/basilic/menthe = Lamiaceae ; citronnelle = Poaceae ; rue = Rutaceae."}];
+let state = {
+  screen: "home",
+  seriesName: "",
+  questions: [],
+  idx: 0,
+  selected: [],
+  validated: false,
+  isCorrect: false,
+  correct: 0,
+  wrong: 0,
+  retryQueue: [],
+  retryCount: 0
+};
 
-const SERIES_4=[{q:"Quel est le nom scientifique de l'anis vert ?",o:{A:"Pimpinella anisum",B:"Carum carvi",C:"Foeniculum vulgare",D:"Cuminum cyminum",E:"Ammi visnaga"},a:["A"],ex:"Anis vert = Pimpinella anisum."},{q:"L'ammi visnaga – partie utilisée (TP1) :",o:{A:"Boutons floraux",B:"Fruits",C:"Racines",D:"Feuilles",E:"Bulbe"},a:["B"],ex:"Ammi visnaga → fruits."},{q:"L'olivier (Olea europaea) – parties utilisées (TP1) :",o:{A:"Feuilles uniquement",B:"Fruits uniquement",C:"Feuilles et fruits",D:"Racines",E:"Bulbe"},a:["C"],ex:"Olivier → feuilles + fruits."},{q:"La badiane (anis étoilé) – famille dans le TP :",o:{A:"Apiaceae",B:"Schisandraceae",C:"Lauraceae",D:"Myrtaceae",E:"Rubiaceae"},a:["B"],ex:"Illicium verum est noté Schisandraceae dans le tableau TP."},{q:"Quelle plante est en Caryophyllaceae (TP1) ?",o:{A:"Herniaire (Herniaria glabra)",B:"Garance (Rubia tinctorum)",C:"Harmel (Peganum harmala)",D:"Nigelle (Nigella sativa)",E:"Muscadier (Myristica fragrans)"},a:["A"],ex:"Herniaire = Caryophyllaceae."},{q:"Le harmel (Peganum harmala) – parties utilisées :",o:{A:"Graines seulement",B:"Racines seulement",C:"Graines et racines",D:"Feuilles et fleurs",E:"Bulbe"},a:["C"],ex:"TP indique graines + racines."},{q:"Le muscadier (Myristica fragrans) – partie utilisée :",o:{A:"Graines",B:"Racines",C:"Bulbe",D:"Sommités fleuries",E:"Pétales"},a:["A"],ex:"Muscadier → graines."},{q:"Quelle est la famille du safran (Crocus sativus) dans le TP ?",o:{A:"Iridaceae",B:"Lamiaceae",C:"Linaceae",D:"Ranunculaceae",E:"Papaveraceae"},a:["A"],ex:"Crocus sativus = Iridaceae."},{q:"La coriandre (TP1/TP2) – parties utilisées :",o:{A:"Feuilles seulement",B:"Fruits (graines) et feuilles",C:"Racines seulement",D:"Bulbe",E:"Écorce"},a:["B"],ex:"Coriandre → fruits (graines) + feuilles."},{q:"Le chardon à glu (Atractylis gummifera) – partie utilisée :",o:{A:"Sommités fleuries",B:"Bulbe",C:"Stigmates",D:"Feuilles fraîches",E:"Fruits étoilés"},a:["A"],ex:"Chardon à glu → sommités fleuries."},{q:"Quelle plante (TP2) utilise les « pétales + huile essentielle » ?",o:{A:"Rose de Damas",B:"Souci officinal",C:"Camomille allemande",D:"Géranium odorant",E:"Myrte"},a:["A"],ex:"Rosa damascena → pétales, huile essentielle."},{q:"Le souci officinal (Calendula officinalis) – partie utilisée :",o:{A:"Feuilles",B:"Bulbe",C:"Capitules floraux",D:"Rhizome",E:"Racines"},a:["C"],ex:"Calendula → capitules floraux."},{q:"Le myrte (Myrtus communis) – parties utilisées :",o:{A:"Feuilles, baies",B:"Fleurs, feuilles",C:"Racines, feuilles",D:"Graines uniquement",E:"Bulbe"},a:["A"],ex:"Myrte → feuilles + baies."},{q:"Quelle plante (TP2) appartient aux Geraniaceae ?",o:{A:"Géranium odorant (Pelargonium graveolens)",B:"Mauve (Malva sylvestris)",C:"Origan (Origanum vulgare)",D:"Rue (Ruta graveolens)",E:"Lierre (Hedera helix)"},a:["A"],ex:"Pelargonium graveolens = Geraniaceae."},{q:"Le laurier noble (Laurus nobilis) – famille :",o:{A:"Lauraceae",B:"Apiaceae",C:"Apocynaceae",D:"Asteraceae",E:"Myrtaceae"},a:["A"],ex:"Laurier noble = Lauraceae."},{q:"La menthe pouliot – nom scientifique :",o:{A:"Mentha suaveolens",B:"Mentha spicata",C:"Mentha pulegium",D:"Mentha piperita",E:"Melissa officinalis"},a:["C"],ex:"Menthe pouliot = Mentha pulegium."},{q:"Le figuier de Barbarie (Opuntia ficus-indica) – parties utilisées :",o:{A:"Fruits, cladodes, graines",B:"Feuilles, baies",C:"Bulbe, écailles",D:"Stigmates, pétales",E:"Écorce, racines"},a:["A"],ex:"TP indique fruits + cladodes + graines."},{q:"Le gingembre (Zingiber officinale) appartient à la famille :",o:{A:"Zingiberaceae",B:"Apiaceae",C:"Linaceae",D:"Cucurbitaceae",E:"Malvaceae"},a:["A"],ex:"Gingembre = Zingiberaceae."},{q:"Le curcuma (Curcuma longa) – partie utilisée :",o:{A:"Rhizome",B:"Stigmates",C:"Bulbe",D:"Pétales",E:"Écorce"},a:["A"],ex:"Curcuma → rhizome."},{q:"Quelles plantes (TP2) sont en Apiaceae ? (plusieurs réponses possibles)",o:{A:"Coriandre (Coriandrum sativum)",B:"Persil (Petroselinum crispum)",C:"Céleri (Apium graveolens)",D:"Basilic (Ocimum basilicum)",E:"Origan (Origanum vulgare)"},a:["A","B","C"],ex:"Coriandre/persil/céleri = Apiaceae ; basilic/origan = Lamiaceae."}];
+function shuffle(a) {
+  const b = [...a];
+  for (let i = b.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [b[i], b[j]] = [b[j], b[i]];
+  }
+  return b;
+}
 
-const SERIES_5=[{q:"Quelle plante du TP1 appartient aux Linaceae ?",o:{A:"Fenugrec",B:"Lin",C:"Cumin velu",D:"Garance",E:"Nigelle"},a:["B"],ex:"Linum usitatissimum est dans la famille Linaceae."},{q:"Quelle est la partie utilisée du « chardon à glu » (Atractylis gummifera) ?",o:{A:"Bulbe",B:"Écorce",C:"Sommités fleuries",D:"Fruits étoilés",E:"Stigmates"},a:["C"],ex:"Le TP indique « sommités fleuries »."},{q:"La plante « Herniaire » correspond à :",o:{A:"Herniaria glabra",B:"Hedera helix",C:"Rubia tinctorum",D:"Ruta graveolens",E:"Rosa damascena"},a:["A"],ex:"L'herniaire du TP1 est Herniaria glabra."},{q:"Quelle plante du TP1 est une source de « fruits (graines) + feuilles » comme partie utilisée ?",o:{A:"Coriandre",B:"Fenouil doux",C:"Carvi",D:"Anis vert",E:"Ricin"},a:["A"],ex:"La coriandre (Coriandrum sativum) → fruits (graines) et feuilles."},{q:"Le « muscadier » appartient à la famille :",o:{A:"Myristicaceae",B:"Myrtaceae",C:"Malvaceae",D:"Rubiaceae",E:"Rutaceae"},a:["A"],ex:"Myristica fragrans = Myristicaceae."},{q:"La scille (Urginea maritima) — famille indiquée dans le TP :",o:{A:"Iridaceae",B:"Asparagaceae",C:"Amaryllidaceae",D:"Araliaceae",E:"Apiaceae"},a:["B"],ex:"La scille est notée Asparagaceae dans le tableau TP."},{q:"Quelle plante du TP1 utilise « feuilles + gousses » ?",o:{A:"Séné (Cassia angustifolia)",B:"Fenugrec",C:"Olivier",D:"Romarin",E:"Datura"},a:["A"],ex:"Cassia angustifolia → feuilles, gousses."},{q:"Quelle est la partie utilisée du « genévrier » (Juniperus communis) ?",o:{A:"Racines",B:"Feuilles",C:"Cônes (baies)",D:"Bulbe",E:"Pétales"},a:["C"],ex:"Le TP indique « cônes (baies) »."},{q:"L'arganier (Argania spinosa) — partie utilisée :",o:{A:"Feuilles",B:"Stigmates",C:"Amandes des fruits (graines)",D:"Écorce",E:"Bulbe"},a:["C"],ex:"Le tableau TP précise « amandes des fruits (graines) »."},{q:"Quelles plantes appartiennent aux Apiaceae (TP1) ? (plusieurs réponses)",o:{A:"Cumin velu",B:"Coriandre",C:"Fenouil doux",D:"Garance",E:"Cannelle"},a:["A","B","C"],ex:"Cuminum cyminum, Coriandrum sativum, Foeniculum vulgare sont en Apiaceae dans le TP1."},{q:"« Verveine officinale » — partie utilisée :",o:{A:"Parties aériennes",B:"Feuilles",C:"Bulbe",D:"Rhizome",E:"Stigmates"},a:["A"],ex:"Verbena officinalis → parties aériennes."},{q:"La « citronnelle » (Cymbopogon citratus) appartient à :",o:{A:"Lamiaceae",B:"Poaceae",C:"Apiaceae",D:"Asteraceae",E:"Rosaceae"},a:["B"],ex:"La citronnelle est en Poaceae dans le TP2."},{q:"Quelle plante du TP2 a pour partie utilisée « feuilles fraîches » ?",o:{A:"Ciboulette",B:"Sauge",C:"Basilic",D:"Thym",E:"Origan"},a:["A"],ex:"Allium schoenoprasum → feuilles fraîches."},{q:"Le « géranium odorant » appartient à la famille :",o:{A:"Geraniaceae",B:"Lauraceae",C:"Apocynaceae",D:"Malvaceae",E:"Myrtaceae"},a:["A"],ex:"Pelargonium graveolens est classé Geraniaceae dans le TP2."},{q:"Quelle plante du TP2 utilise « feuilles + baies » ?",o:{A:"Myrte",B:"Mauve",C:"Laurier noble",D:"Aloe vera",E:"Absinthe"},a:["A"],ex:"Myrtus communis → feuilles, baies."},{q:"Le lierre grimpant correspond à :",o:{A:"Hedera helix",B:"Herniaria glabra",C:"Artemisia herba-alba",D:"Opuntia ficus-indica",E:"Ruta graveolens"},a:["A"],ex:"Lierre grimpant = Hedera helix."},{q:"Quelles plantes du TP2 appartiennent aux Verbenaceae ? (plusieurs réponses)",o:{A:"Verveine officinale",B:"Verveine citronnée",C:"Citronnelle",D:"Basilic",E:"Menthe poivrée"},a:["A","B"],ex:"Verbena officinalis et Aloysia citrodora sont en Verbenaceae dans le tableau."},{q:"« Armoise blanche » — partie utilisée (TP2) :",o:{A:"Graines",B:"Parties aériennes",C:"Bulbe",D:"Racines",E:"Capitules floraux"},a:["B"],ex:"Artemisia herba-alba → parties aériennes."},{q:"Le laurier rose (Nerium oleander) — particularité indiquée :",o:{A:"Fruits étoilés",B:"Feuilles très toxiques",C:"Bulbe utilisé",D:"Stigmates utilisés",E:"Graines huileuses"},a:["B"],ex:"Le TP mentionne « feuilles (très toxiques) »."},{q:"Dans la nomenclature binomiale, le nom d'une espèce est formé par :",o:{A:"Famille + ordre",B:"Genre + espèce",C:"Nom vernaculaire + famille",D:"Ordre + espèce",E:"Classe + genre"},a:["B"],ex:"Le cours rappelle le binôme « Genre espèce »."}];
-
-const SERIES_6=[{q:"Le « clou de girofle » — partie utilisée :",o:{A:"Racines",B:"Boutons floraux",C:"Bulbe",D:"Stigmates",E:"Feuilles fraîches"},a:["B"],ex:"Eugenia caryophylata → boutons floraux."},{q:"Quelle plante du TP1 appartient aux Oleaceae ?",o:{A:"Olivier (Olea europaea)",B:"Laurier noble",C:"Myrte",D:"Garance",E:"Absinthe"},a:["A"],ex:"L'olivier est noté Oleaceae dans le TP1."},{q:"La cannelle (Cinnamomum zeylanicum) — famille :",o:{A:"Lauraceae",B:"Apiaceae",C:"Lamiaceae",D:"Myrtaceae",E:"Papaveraceae"},a:["A"],ex:"Cinnamomum zeylanicum = Lauraceae dans le tableau."},{q:"La « staphisaigre » correspond à :",o:{A:"Delphinium staphisagria",B:"Datura stramonium",C:"Nigella sativa",D:"Artemisia absinthium",E:"Urginea maritima"},a:["A"],ex:"Staphisaigre = Delphinium staphisagria."},{q:"La staphisaigre appartient à la famille :",o:{A:"Apiaceae",B:"Ranunculaceae",C:"Asteraceae",D:"Caryophyllaceae",E:"Papaveraceae"},a:["B"],ex:"Delphinium staphisagria est en Ranunculaceae dans le TP."},{q:"Quelle plante du TP1 appartient aux Rubiaceae ?",o:{A:"Garance (Rubia tinctorum)",B:"Romarin",C:"Fenouil doux",D:"Ricin",E:"Badiane"},a:["A"],ex:"Garance = Rubiaceae."},{q:"Quelle est la partie utilisée de la réglisse (Glycyrrhiza glabra) ?",o:{A:"Bulbe",B:"Racines",C:"Capitules floraux",D:"Stigmates",E:"Écorce"},a:["B"],ex:"Le TP indique « racines »."},{q:"Quelle plante est en Solanaceae (TP1) ?",o:{A:"Datura",B:"Nigelle",C:"Harmel",D:"Séné",E:"Argan"},a:["A"],ex:"Datura stramonium = Solanaceae dans le TP1."},{q:"Quelles plantes du TP1 ont la partie utilisée « graines » ? (plusieurs réponses)",o:{A:"Fenugrec",B:"Nigelle",C:"Ricin",D:"Garance",E:"Safran"},a:["A","B","C"],ex:"Fenugrec/nigelle/ricin → graines, alors que garance → racines et safran → stigmates."},{q:"Le safran (Crocus sativus) — partie utilisée :",o:{A:"Bulbe",B:"Feuilles",C:"Stigmates du pistil",D:"Écorce",E:"Fruits"},a:["C"],ex:"Le TP précise « stigmates du pistil »."},{q:"Quelle plante du TP2 utilise « feuilles et sommités fleuries » ?",o:{A:"Thym",B:"Camomille",C:"Rue",D:"Ciboulette",E:"Myrte"},a:["A"],ex:"Thymus vulgaris → feuilles et sommités fleuries."},{q:"Quelle plante du TP2 est en Rutaceae ?",o:{A:"Rue (Ruta graveolens)",B:"Lavande",C:"Mauve",D:"Citronnelle",E:"Lierre"},a:["A"],ex:"La rue est notée Rutaceae."},{q:"Quelle plante du TP2 a pour partie utilisée « capitules floraux » ?",o:{A:"Calendula officinalis",B:"Matricaria chamomilla",C:"Malva sylvestris",D:"Origanum majorana",E:"Laurus nobilis"},a:["B"],ex:"Camomille allemande → capitules floraux."},{q:"Quelle plante du TP2 appartient aux Malvaceae ?",o:{A:"Mauve (Malva sylvestris)",B:"Myrte",C:"Rose de Damas",D:"Aloe vera",E:"Absinthe"},a:["A"],ex:"Malva sylvestris = Malvaceae."},{q:"Quelle est la partie utilisée de la rose de Damas (Rosa damascena) ?",o:{A:"Bulbe",B:"Pétales, huile essentielle",C:"Racines",D:"Graines huileuses",E:"Stigmates"},a:["B"],ex:"Le TP mentionne « pétales, huile essentielle »."},{q:"L'aloe vera — famille indiquée dans le TP2 :",o:{A:"Aloeaceae",B:"Asphodelaceae",C:"Amaryllidaceae",D:"Apiaceae",E:"Asteraceae"},a:["B"],ex:"Le tableau TP2 classe Aloe vera en Asphodelaceae."},{q:"Quelles plantes du TP2 sont en Amaryllidaceae ? (plusieurs réponses)",o:{A:"Ail",B:"Oignon",C:"Ciboulette",D:"Romarin",E:"Basilic"},a:["A","B","C"],ex:"Ail/oignon/ciboulette sont notés Amaryllidaceae dans le TP2."},{q:"La marjolaine officinale correspond à :",o:{A:"Origanum majorana",B:"Origanum vulgare",C:"Ocimum basilicum",D:"Melissa officinalis",E:"Mentha suaveolens"},a:["A"],ex:"Marjolaine = Origanum majorana."},{q:"Le figuier de Barbarie — famille :",o:{A:"Rosaceae",B:"Cactaceae",C:"Cupressaceae",D:"Caryophyllaceae",E:"Oleaceae"},a:["B"],ex:"Opuntia ficus-indica = Cactaceae."},{q:"En systématique (cours), la terminaison la plus typique des familles végétales est :",o:{A:"-ales",B:"-aceae",C:"-ineae",D:"-oïdes",E:"-phyta"},a:["B"],ex:"Le cours rappelle « Famille … -aceae » (avec exceptions historiques)."}];
-
-let state={screen:"home",seriesName:"",questions:[],idx:0,selected:[],validated:false,isCorrect:false,correct:0,wrong:0,retryQueue:[],retryCount:0};
-
-function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
-
-function startSeries(n){
-  const data=n===1?SERIES_1:n===2?SERIES_2:n===3?SERIES_3:n===4?SERIES_4:n===5?SERIES_5:SERIES_6;
-  state={screen:"quiz",seriesName:"Série "+n,seriesNum:n,questions:shuffle(data),idx:0,selected:[],validated:false,isCorrect:false,correct:0,wrong:0,retryQueue:[],retryCount:0};
+function startSeries(n) {
+  const data = n === 1 ? SERIES_1 : SERIES_2;
+  state = {
+    screen: "quiz",
+    seriesName: "Série " + n,
+    seriesNum: n,
+    questions: shuffle(data),
+    idx: 0,
+    selected: [],
+    validated: false,
+    isCorrect: false,
+    correct: 0,
+    wrong: 0,
+    retryQueue: [],
+    retryCount: 0
+  };
   render();
 }
-function goHome(){state.screen="home";render();}
 
-function toggleOption(letter){
-  if(state.validated)return;
-  const i=state.selected.indexOf(letter);
-  if(i>-1)state.selected.splice(i,1);else state.selected.push(letter);
+function goHome() {
+  state.screen = "home";
   render();
 }
 
-function validate(){
-  if(state.selected.length===0||state.validated)return;
-  const q=state.questions[state.idx];
-  const ok=state.selected.length===q.a.length&&state.selected.every(s=>q.a.includes(s));
-  state.isCorrect=ok;state.validated=true;
-  if(ok)state.correct++;else state.wrong++;
+function toggleOption(letter) {
+  if (state.validated) return;
+  const i = state.selected.indexOf(letter);
+  if (i > -1) state.selected.splice(i, 1);
+  else state.selected.push(letter);
   render();
 }
 
-function next(){
-  if(state.idx+1<state.questions.length){
-    state.idx++;state.selected=[];state.validated=false;
-  }else if(state.retryQueue.length>0){
-    const nq=shuffle(state.retryQueue);
-    state.questions=state.questions.concat(nq);
-    state.retryQueue=[];
-    state.idx++;state.selected=[];state.validated=false;
-  }else{state.screen="result";}
+function validate() {
+  if (state.selected.length === 0 || state.validated) return;
+  const q = state.questions[state.idx];
+  // Check correctness: selected must equal answers exactly
+  const ok = state.selected.length === q.a.length && state.selected.every(s => q.a.includes(s));
+  
+  state.isCorrect = ok;
+  state.validated = true;
+  if (ok) state.correct++;
+  else state.wrong++;
   render();
 }
 
-function retryLater(){
+function next() {
+  if (state.idx + 1 < state.questions.length) {
+    state.idx++;
+    state.selected = [];
+    state.validated = false;
+  } else if (state.retryQueue.length > 0) {
+    // Load retries
+    const nq = shuffle(state.retryQueue);
+    state.questions = state.questions.concat(nq);
+    state.retryQueue = [];
+    state.idx++;
+    state.selected = [];
+    state.validated = false;
+  } else {
+    state.screen = "result";
+  }
+  render();
+}
+
+function retryLater() {
   state.retryQueue.push(state.questions[state.idx]);
   state.retryCount++;
   next();
 }
 
-function render(){
-  const home=document.getElementById("homeScreen");
-  const quiz=document.getElementById("quizScreen");
-  const result=document.getElementById("resultScreen");
-  const back=document.getElementById("backBtn");
+function render() {
+  const home = document.getElementById("homeScreen");
+  const quiz = document.getElementById("quizScreen");
+  const result = document.getElementById("resultScreen");
+  const back = document.getElementById("backBtn");
 
-  home.className=state.screen==="home"?"anim":"hidden";
-  quiz.className=state.screen==="quiz"?"anim":"hidden";
-  result.className=state.screen==="result"?"anim":"hidden";
-  back.className=state.screen==="quiz"?"back-btn":"back-btn hidden";
+  home.className = state.screen === "home" ? "anim" : "hidden";
+  quiz.className = state.screen === "quiz" ? "anim" : "hidden";
+  result.className = state.screen === "result" ? "anim" : "hidden";
+  back.className = state.screen === "quiz" ? "back-btn" : "back-btn hidden";
 
-  if(state.screen==="quiz")renderQuiz();
-  if(state.screen==="result")renderResult();
+  if (state.screen === "quiz") renderQuiz();
+  if (state.screen === "result") renderResult();
 }
 
-function renderQuiz(){
-  const q=state.questions[state.idx];
-  const total=state.questions.length;
-  const pct=total>0?(state.idx/total)*100:0;
-  const letters=["A","B","C","D","E"].filter(l=>q.o[l]);
+function renderQuiz() {
+  const q = state.questions[state.idx];
+  const total = state.questions.length;
+  // Progress bar calculation based on current index vs total
+  const pct = total > 0 ? (state.idx / total) * 100 : 0;
+  
+  // Available options for this question
+  const letters = ["A", "B", "C", "D", "E"].filter(l => q.o[l]);
 
-  let html=`
+  let html = `
     <div class="progress">
       <div class="progress-top">
-        <span>Question ${Math.min(state.idx+1,total)} sur ${total}</span>
+        <span>Question ${state.idx + 1} sur ${total}</span>
         <span><span class="correct">Correct : ${state.correct}</span>&nbsp;&nbsp;&nbsp;<span class="wrong">Faux : ${state.wrong}</span></span>
       </div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
     </div>
-    <div class="q-label">${state.seriesName} — Q${state.idx+1}</div>
+    <div class="q-label">${state.seriesName} — Q${state.idx + 1}</div>
     <div class="card"><div class="q-text">${q.q}</div></div>
     <div class="options">`;
 
-  letters.forEach(l=>{
-    let cls="option";
-    let badgeCls="badge";
-    let textColor="#4b5563";
-    let textWeight=500;
-    const isSel=state.selected.includes(l);
-    const isAns=q.a.includes(l);
+  letters.forEach(l => {
+    let cls = "option";
+    let textColor = "#4b5563";
+    let textWeight = 500;
+    const isSel = state.selected.includes(l);
+    const isAns = q.a.includes(l);
 
-    if(!state.validated){
-      if(isSel){cls+=" selected";textColor="#111827";}
-    }else{
-      cls+=" disabled";
-      if(isAns){cls+=" correct-answer";textColor="#15803d";textWeight=700;}
-      else if(isSel&&!isAns){cls+=" wrong-answer";textColor="#b91c1c";textWeight=700;}
-      else{cls+=" dimmed";}
+    if (!state.validated) {
+      if (isSel) {
+        cls += " selected";
+        textColor = "#111827";
+      }
+    } else {
+      cls += " disabled";
+      if (isAns) {
+        cls += " correct-answer";
+        textColor = "#15803d";
+        textWeight = 700;
+      } else if (isSel && !isAns) {
+        cls += " wrong-answer";
+        textColor = "#b91c1c";
+        textWeight = 700;
+      } else {
+        cls += " dimmed";
+      }
     }
 
-    html+=`<div class="${cls}" onclick="toggleOption('${l}')">
+    html += `<div class="${cls}" onclick="toggleOption('${l}')">
       <div class="badge">${l}</div>
       <div class="option-text" style="color:${textColor};font-weight:${textWeight}">${q.o[l]}</div>
     </div>`;
   });
 
-  html+=`</div>`;
+  html += `</div>`;
 
-  if(state.validated){
-    const ec=state.isCorrect?"is-correct":"is-wrong";
-    const ic=state.isCorrect?"green":"red";
-    const sym=state.isCorrect?"✓":"✗";
-    const label=state.isCorrect?"Correct":"Incorrect";
-    html+=`<div class="explanation ${ec}">
+  if (state.validated) {
+    const ec = state.isCorrect ? "is-correct" : "is-wrong";
+    const ic = state.isCorrect ? "green" : "red";
+    const sym = state.isCorrect ? "✓" : "✗";
+    const label = state.isCorrect ? "Correct" : "Incorrect";
+    html += `<div class="explanation ${ec}">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
         <div class="icon-badge ${ic}">${sym}</div>
         <span class="status ${ic}">${label}</span>
       </div>
-      <div class="body"><strong>Réponses : ${q.a.join(", ")}</strong><br>${q.ex}</div>
+      <div class="body"><strong>Réponses attendues : ${q.a.join(", ")}</strong><br>${q.ex}</div>
     </div>`;
   }
 
-  if(!state.validated){
-    const dis=state.selected.length===0;
-    html+=`<button class="btn btn-primary" ${dis?"disabled":""} onclick="validate()">Valider</button>`;
-  }else{
-    html+=`<div class="btn-row">`;
-    if(!state.isCorrect){
-      html+=`<button class="btn btn-secondary" onclick="retryLater()">Repasser plus tard</button>`;
+  if (!state.validated) {
+    const dis = state.selected.length === 0;
+    html += `<button class="btn btn-primary" ${dis ? "disabled" : ""} onclick="validate()">Valider</button>`;
+  } else {
+    html += `<div class="btn-row">`;
+    if (!state.isCorrect) {
+      html += `<button class="btn btn-secondary" onclick="retryLater()">Repasser plus tard</button>`;
     }
-    const label=state.idx+1>=total&&state.retryQueue.length===0?"Voir résultats":"Suivant";
-    html+=`<button class="btn btn-primary" onclick="next()">${label}</button></div>`;
+    const label = state.idx + 1 >= total && state.retryQueue.length === 0 ? "Voir résultats" : "Suivant";
+    html += `<button class="btn btn-primary" onclick="next()">${label}</button></div>`;
   }
 
-  if(state.retryQueue.length>0){
-    html+=`<div class="retry-info">${state.retryQueue.length} question${state.retryQueue.length>1?"s":""} à repasser en fin de série</div>`;
+  if (state.retryQueue.length > 0) {
+    html += `<div class="retry-info">${state.retryQueue.length} question${state.retryQueue.length > 1 ? "s" : ""} à repasser en fin de série</div>`;
   }
 
-  document.getElementById("quizScreen").innerHTML=html;
+  document.getElementById("quizScreen").innerHTML = html;
 }
 
-function renderResult(){
-  const total=state.correct+state.wrong;
-  const pct=total>0?Math.round((state.correct/total)*100):0;
-  const grade=pct>=90?"S":pct>=80?"A":pct>=70?"B":pct>=60?"C":pct>=50?"D":"F";
-  const gc={S:"#111827",A:"#16a34a",B:"#16a34a",C:"#6b7280",D:"#dc2626",F:"#dc2626"}[grade];
+function renderResult() {
+  const total = state.correct + state.wrong;
+  const pct = total > 0 ? Math.round((state.correct / total) * 100) : 0;
+  const grade = pct >= 90 ? "S" : pct >= 80 ? "A" : pct >= 70 ? "B" : pct >= 60 ? "C" : pct >= 50 ? "D" : "F";
+  const gc = { S: "#111827", A: "#16a34a", B: "#16a34a", C: "#6b7280", D: "#dc2626", F: "#dc2626" }[grade];
 
-  document.getElementById("resultScreen").innerHTML=`
+  document.getElementById("resultScreen").innerHTML = `
     <div class="results">
       <div class="grade-circle"><span class="grade-letter" style="color:${gc}">${grade}</span></div>
       <div class="grade-label">Rang obtenu</div>
